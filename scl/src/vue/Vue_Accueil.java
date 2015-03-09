@@ -1,14 +1,14 @@
 package vue;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controleur.Controleur_Utilisateur;
@@ -81,15 +80,19 @@ public class Vue_Accueil extends JFrame {
 		JButton boutonAdmin = new JButton (">Admin<");
 		boutonAdmin.setActionCommand(Controleur_Utilisateur.ACTION_ADMIN);
 		boutonAdmin.addActionListener(controleurUtilisateur);
+//////////
 		
 		
-		
+		JPanel panneauCreerCompte = new JPanel();
+		panneauCreerCompte.setLayout(new FlowLayout());
+		panneauCreerCompte.setBackground(Vue_Utilisateur.marron);
 		boutonCreerCompte = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/bouton_creer.png")));
 			boutonCreerCompte.setBackground(new Color(0, 0, 0, 100));
 			boutonCreerCompte.setOpaque(false);
 			boutonCreerCompte.setBorderPainted(false);
-			boutonCreerCompte.setPreferredSize(new Dimension(165, 81));
+			boutonCreerCompte.setPreferredSize(new Dimension(155, 81));
 			boutonCreerCompte.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		panneauCreerCompte.add(boutonCreerCompte);
 		boutonCreerCompte.setActionCommand(Controleur_Utilisateur.ACTION_CREER_COMPTE);
 		boutonCreerCompte.addActionListener(controleurUtilisateur);
 		boutonReactiver = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_reactiver.png")));
@@ -176,6 +179,8 @@ public class Vue_Accueil extends JFrame {
 		this.setTitle("Accueil");
 		
 		this.pack();
+		//JFrame.setDefaultLookAndFeelDecorated(true);
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		this.getContentPane().setBackground(Vue_Utilisateur.marron);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(650, 450);

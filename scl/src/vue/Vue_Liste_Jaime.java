@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import controleur.Controleur_Mur;
+
 public class Vue_Liste_Jaime extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -22,12 +24,13 @@ public class Vue_Liste_Jaime extends JFrame {
 	JLabel photoProfil;
 	JLabel labelPrenom;
 	JLabel labelNom;
-	
+	Controleur_Mur controleurMur;
 	
 	static Font f2 = new Font("Helvetica", Font.BOLD+Font.ITALIC, 16);
 	
 	public Vue_Liste_Jaime(){
 		
+	
 		JPanel panel = new JPanel();
 		
 	    

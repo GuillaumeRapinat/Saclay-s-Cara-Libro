@@ -41,11 +41,12 @@ public class Vue_Charger_Image extends JFrame {
 		
 		JPanel panneauTerminer = new JPanel();
 		panneauTerminer.setLayout(new FlowLayout());
+		panneauTerminer.setBackground(Vue_Utilisateur.marron);
 		boutonTerminer = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_ajouter.png")));
 			boutonTerminer.setBackground(new Color(0, 0, 0));
 			boutonTerminer.setOpaque(false);
 			boutonTerminer.setBorderPainted(false);
-			boutonTerminer.setPreferredSize(new Dimension(118, 55));
+			boutonTerminer.setPreferredSize(new Dimension(118, 50));
 			boutonTerminer.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panneauTerminer.add(boutonTerminer);
 			

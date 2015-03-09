@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.File;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,11 +28,12 @@ import controleur.Controleur_Mur;
 import controleur.Controleur_Utilisateur;
 import controleur.Controleur_Message;
 
-public class Vue_Utilisateur extends JFrame {
+public class Vue_Ami extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
 	// composants de l'interface graphique
+	String s;
 	JPanel panneauMur;
 	JLabel photoProfil;
 	JLabel labelPrenom;
@@ -42,11 +44,12 @@ public class Vue_Utilisateur extends JFrame {
 	JButton boutonMessage;
 	JButton boutonDeconnection;
 	JButton boutonAmis;
-	JButton boutonPublier;
+	JButton boutonEnvoyer;
 	JButton boutonChat;
+	JButton boutonSupprimer;
 	JButton boutonProfil;
 	JButton boutonActualite;
-	JTextArea textePublier;
+	JTextArea texteMessage;
 	public static JFileChooser fc;
 	Controleur_Mur controleurMur;
 	Controleur_Utilisateur controleurUtilisateur;
@@ -57,15 +60,15 @@ public class Vue_Utilisateur extends JFrame {
 
 	GridBagConstraints gbc = new GridBagConstraints();
 	
-	public Vue_Utilisateur(Controleur_Utilisateur controleurUtilisateur) {
+	public Vue_Ami(Controleur_Utilisateur controleurUtilisateur, int id_utilisateur) {
 		
 		this.controleurUtilisateur = controleurUtilisateur;
 		
 		this.setLayout(new GridBagLayout());
 		
-		ajouterProfil();
+		ajouterProfil(getClass().getClassLoader().getResource("images/marion.jpg"), "Marion", "Peral", false, 24);
 		
-		ajouterMur();
+		ajouterMur(getClass().getClassLoader().getResource("images/marion_petit.jpg"), "Marion", "Peral");
 		
 		// affichage de la fen�tre
 		this.setTitle("Saclay's Cara Libro");
@@ -75,23 +78,22 @@ public class Vue_Utilisateur extends JFrame {
 		this.setVisible(true);
 	}
 
-	private void ajouterMur() {
+	private void ajouterMur(URL url, String prenom, String nom) {
 		panneauMur = new JPanel();
 		panneauMur.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
 		panneauMur.setLayout(new BoxLayout(panneauMur, BoxLayout.Y_AXIS));
 		panneauMur.setSize(500, 200);
-		controleurMur = new Controleur_Mur();
 		Vue_Mur vue2 = new Vue_Mur(controleurMur);
 
-		vue2.publication(getClass().getClassLoader().getResource("images/profil_petit.png"), "Guillaume", "Rapinat", "Ah oui, je suis bien arrivé en retard, et sous la pluie en plus...\n Bad day begins...", "04/03/2015", "10:05:32", 5, 12, panneauMur);
+		vue2.publication(url, prenom, nom, "...ZZzzzZzZZZzzzZz...", "07/03/2015", "18:30:32", 1, 1, panneauMur);
 
 			panneauMur.add(Box.createRigidArea(new Dimension(0,20)));
-		vue2.publication(getClass().getClassLoader().getResource("images/profil_petit.png"), "Wilfried", "Rabouin", "Coucou, tu veux voir ma bite?", "04/03/2015", "10:02:07", 52, 7, getClass().getClassLoader().getResource("images/penis.jpg"), panneauMur);
+		vue2.publication(url, prenom, nom, "Bon, je vais dormir un petit peu, je suis fatigué...", "07/03/2015", "15:30:07", 1, 3, panneauMur);
 			panneauMur.add(Box.createRigidArea(new Dimension(0,20)));
-		vue2.publication(getClass().getClassLoader().getResource("images/profil_petit.png"), "Guillaume", "Rapinat", "Et merde, je vais encore être en retard!!\n Vive les vacances putain!!!!!", "04/03/2015", "09:45:52", 2, 0, panneauMur);
+		vue2.publication(url, prenom, nom, "Vive les foraminifères!!", "06/03/2015", "17:12:29", 320, 78, getClass().getClassLoader().getResource("images/neogloquadrinaPD.png"), panneauMur);
 
 		JScrollPane jsp = new JScrollPane(panneauMur, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		jsp.setPreferredSize(new Dimension(600, 350));
+		jsp.setPreferredSize(new Dimension(600, 375));
 		this.add(jsp); // le panel est déjà dans un scrollbar, il ne reste que
 						// mettre le scrollbar dans la fenêtre!!
 		
@@ -100,86 +102,67 @@ public class Vue_Utilisateur extends JFrame {
 		gbc.gridheight = GridBagConstraints.REMAINDER;
 		gbc.gridwidth = 8;
 		gbc.anchor = GridBagConstraints.BASELINE;
-		gbc.insets = new Insets(0, 0, 0, -60);
+		gbc.insets = new Insets(-10, 0, 0, -60);
 		this.add(jsp, gbc);
 		
 		panneauMur.setBackground(marron);
 		
-/*		vue2.boutonCommenter.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
-		vue2.boutonCommenter.addActionListener(controleurMur);
-		vue2.nbrCom.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
-		vue2.nbrCom.addActionListener(controleurMur);
-*/		
+		
 	}
 
-	private void ajouterProfil() {
-		photoProfil = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("images/profil.png")));
+	private void ajouterProfil(URL url, String prenom, String nom, boolean sexe, int age) {
+		if (sexe == true) 
+			s = "Homme";
+		else
+			s = "Femme";
+		
+		photoProfil = new JLabel(new ImageIcon(url));
 
-		labelAge = new JLabel("Age");
+		labelAge = new JLabel(age + " ans");
 			labelAge.setFont(f2);
-		labelSexe = new JLabel("Sexe");
+		labelSexe = new JLabel(s);
 			labelSexe.setFont(f2);
+		labelPrenom = new JLabel(prenom);
+			labelPrenom.setFont(Vue_Accueil.f);
+		labelNom = new JLabel(nom);
+			labelNom.setFont(Vue_Accueil.f);
 		
+		JPanel panneauMessage = new JPanel();
+		panneauMessage.setLayout(new FlowLayout());
+		panneauMessage.setBackground(new Color(0,0,0));
+		panneauMessage.setOpaque(false);
+		texteMessage = new JTextArea("Ecrire un message");
+			JScrollPane scrollPaneArea = new JScrollPane(texteMessage,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);   
+			texteMessage.setCaretPosition(0); //set scrollPane to the top  
+			texteMessage.setLineWrap(true);
+			texteMessage.setWrapStyleWord(true);
+			texteMessage.setFont(Vue_Mur.f4);
+			texteMessage.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			texteMessage.setBackground(new Color(255,248,192));
+			scrollPaneArea.setPreferredSize(new Dimension(370, 90)); 
+			panneauMessage.add(scrollPaneArea);  
 			
+		boutonEnvoyer = new JButton (new ImageIcon(getClass().getClassLoader().getResource("images/boutons_envoyer.png")));
+			boutonEnvoyer.setBackground(new Color(0, 0, 0));
+			boutonEnvoyer.setOpaque(false);
+			boutonEnvoyer.setBorderPainted(false);
+			boutonEnvoyer.setCursor(new Cursor(Cursor.HAND_CURSOR));			
+			boutonEnvoyer.setPreferredSize(new Dimension(118, 55));
 			
-		JPanel panneauModifier = new JPanel();
-		panneauModifier.setLayout(new FlowLayout());
-		panneauModifier.setBackground(Vue_Utilisateur.marron);	
-		boutonModifier = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_modifier.png")));
-			boutonModifier.setBackground(new Color(0, 0, 0));
-			boutonModifier.setOpaque(false);
-			boutonModifier.setBorderPainted(false);
-			boutonModifier.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			boutonModifier.setPreferredSize(new Dimension(118, 55));
-		panneauModifier.add(boutonModifier);
-
-		labelPrenom = new JLabel("Prénom");
-			labelPrenom.setFont(f2);
-		labelNom = new JLabel("Nom");
-			labelNom.setFont(f2);
+		boutonSupprimer = new JButton ("Supprimer");
 		
-		JPanel panneauPublier = new JPanel();
-		panneauPublier.setLayout(new FlowLayout());
-		panneauPublier.setBackground(Vue_Utilisateur.marron);
-		textePublier = new JTextArea("Exprimez-vous");
-			JScrollPane scrollPaneArea = new JScrollPane(textePublier,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);   
-			textePublier.setCaretPosition(0); //set scrollPane to the top  
-			textePublier.setLineWrap(true);
-			textePublier.setWrapStyleWord(true);
-			textePublier.setFont(Vue_Mur.f4);
-			textePublier.setBackground(new Color(255,248,192));
-			textePublier.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-			scrollPaneArea.setPreferredSize(new Dimension(500, 110)); 
-			panneauPublier.add(scrollPaneArea);  
-			
-		boutonPublier = new JButton (new ImageIcon(getClass().getClassLoader().getResource("images/boutons_publier.png")));
-			boutonPublier.setBackground(new Color(0, 0, 0));
-			boutonPublier.setOpaque(false);
-			boutonPublier.setBorderPainted(false);
-			boutonPublier.setCursor(new Cursor(Cursor.HAND_CURSOR));			
-			boutonPublier.setPreferredSize(new Dimension(118, 55));
-			
-			
-		JPanel panneauAjouter = new JPanel();
-		panneauAjouter.setLayout(new FlowLayout());
-		panneauAjouter.setBackground(Vue_Utilisateur.marron);
-		JButton boutonAjouter = new JButton (new ImageIcon(getClass().getClassLoader().getResource("images/bouton_photo.png")));
-			boutonAjouter.setBackground(new Color(0, 0, 0));
-			boutonAjouter.setOpaque(false);
-			boutonAjouter.setBorderPainted(false);
-			boutonAjouter.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			boutonAjouter.setPreferredSize(new Dimension(57, 57));
-		panneauAjouter.add(boutonAjouter);
-			
-			
-			
-			
+		JPanel panneauDeconnection = new JPanel();
+		panneauDeconnection.setLayout(new FlowLayout());
+		panneauDeconnection.setBackground(marron);
 		boutonDeconnection = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_deconnect.png")));
 			boutonDeconnection.setBackground(new Color(0, 0, 0));
 			boutonDeconnection.setOpaque(false);
 			boutonDeconnection.setBorderPainted(false);
 			boutonDeconnection.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			//boutonDeconnection.setPreferredSize(new Dimension(50, 300));
+			boutonDeconnection.setPreferredSize(new Dimension(177, 33));
+		panneauDeconnection.add(boutonDeconnection);
+			
+			
 		boutonMessage = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/message.png")));
 			boutonMessage.setBackground(new Color(0, 0, 0));
 			boutonMessage.setOpaque(false);
@@ -209,7 +192,7 @@ public class Vue_Utilisateur extends JFrame {
 			boutonActualite.setBorderPainted(false);
 			boutonActualite.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			boutonActualite.setPreferredSize(new Dimension(50, 45));	
-			
+
 		JTextField barreRechercher = new JTextField ("Rechercher quelqu'un");
 			barreRechercher.setFont(f2);
 			barreRechercher.setBackground(new Color(255,248,192));
@@ -234,33 +217,25 @@ public class Vue_Utilisateur extends JFrame {
 		gbc.insets = new Insets(-20, 0, 0, 0);
 		this.add(photoProfil, gbc);
 		
-		gbc.gridx = 1;
-		gbc.gridy = 3;
+		gbc.gridx = 3;
+		gbc.gridy = 1;
 		gbc.gridheight = gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BELOW_BASELINE_TRAILING;
-		gbc.insets = new Insets(-35, 0, 0, 50);
+		gbc.insets = new Insets(-35, 40, 0, 50);
 		this.add(labelAge, gbc);
 		
-		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridx = 2;
+		gbc.gridy = 1;
 		gbc.gridheight = gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.BELOW_BASELINE_TRAILING;
-		gbc.insets = new Insets(-35, 0, 0, 0);
+		gbc.anchor = GridBagConstraints.BELOW_BASELINE_LEADING;
+		gbc.insets = new Insets(-35, 10, 0, 0);
 		this.add(labelSexe, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.ABOVE_BASELINE;
-		gbc.insets = new Insets(-20, 0, 0, 0);
-		this.add(boutonModifier, gbc);
 		
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.gridheight = gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
-		gbc.insets = new Insets(0, 9, 0, 0);
+		gbc.insets = new Insets(0, 10, 0, 0);
 		this.add(labelPrenom, gbc);
 		
 		gbc.gridx = 3;
@@ -271,27 +246,28 @@ public class Vue_Utilisateur extends JFrame {
 		this.add(labelNom, gbc);
 		
 		gbc.gridx = 2;
-		gbc.gridy = 1;
-		gbc.gridheight = 3;
-		gbc.gridwidth = 6;
+		gbc.gridy = 2;
+		gbc.gridheight = 2;
+		gbc.gridwidth = 4;
 		gbc.anchor = GridBagConstraints.ABOVE_BASELINE;
-		gbc.insets = new Insets(-60, 0, 0, 0);
+		gbc.insets = new Insets(-55, 0, 0, 0);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(panneauPublier, gbc);
+		this.add(panneauMessage, gbc);
 		
 		gbc.gridx = 6;
-		gbc.gridy = 4;
+		gbc.gridy = 2;
 		gbc.gridheight = gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
-		gbc.insets = new Insets(-20, 150, 0, 0);
-		this.add(boutonPublier, gbc);
-		
-		gbc.gridx = 3;
-		gbc.gridy = 4;
-		gbc.gridheight = gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
-		gbc.insets = new Insets(-40, -215, 0, -50);
-		this.add(panneauAjouter, gbc);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		this.add(boutonEnvoyer, gbc);
+	
+		gbc.gridx = 6;
+		gbc.gridy = 0;
+		gbc.gridheight = 1;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		this.add(boutonSupprimer, gbc);
 		
 		gbc.gridx = 8;
 		gbc.gridy = 0;
@@ -299,7 +275,7 @@ public class Vue_Utilisateur extends JFrame {
 		gbc.gridwidth = 3;
 		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		this.add(boutonDeconnection, gbc);
+		this.add(panneauDeconnection, gbc);
 		
 		gbc.gridx = 8;
 		gbc.gridy = 1;
@@ -330,11 +306,12 @@ public class Vue_Utilisateur extends JFrame {
 		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		this.add(boutonActualite, gbc);
-
+		
+		
 		gbc.gridx = 8;
 		gbc.gridy = 3;
 		gbc.gridheight = 1;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.BELOW_BASELINE;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		this.add(barreRechercher, gbc);
@@ -355,8 +332,10 @@ public class Vue_Utilisateur extends JFrame {
 		this.add(boutonChat, gbc);
 		
 				//Action de chaque composant
-		boutonModifier.setActionCommand(Controleur_Utilisateur.ACTION_MODIFIER_PROFIL);
-		boutonModifier.addActionListener(controleurUtilisateur);
+		boutonEnvoyer.setActionCommand(Controleur_Utilisateur.ACTION_ENVOYER_MESSAGE);
+		boutonEnvoyer.addActionListener(controleurUtilisateur);
+		boutonSupprimer.setActionCommand(Controleur_Utilisateur.ACTION_SUPPRIMER_AMI);
+		boutonSupprimer.addActionListener(controleurUtilisateur);
 		//boutonMessage.setActionCommand(Controleur_Utilisateur.ACTION_LISTER_MESSAGE);
 		//boutonMessage.addActionListener(controleurUtilisateur);
 		boutonDeconnection.setActionCommand(Controleur_Utilisateur.ACTION_DECONNECTION);
@@ -365,8 +344,6 @@ public class Vue_Utilisateur extends JFrame {
 		boutonAmis.addActionListener(controleurUtilisateur);
 		boutonMessage.setActionCommand(Controleur_Utilisateur.ACTION_LISTER_MESSAGES);
 		boutonMessage.addActionListener(controleurUtilisateur);
-		boutonAjouter.setActionCommand(Controleur_Utilisateur.ACTION_AJOUTER_IMAGE);
-		boutonAjouter.addActionListener(controleurUtilisateur);
 		boutonRechercher.setActionCommand(Controleur_Utilisateur.ACTION_RECHERCHER_AMIS);
 		boutonRechercher.addActionListener(controleurUtilisateur);
 		boutonProfil.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_PERSONNEL);

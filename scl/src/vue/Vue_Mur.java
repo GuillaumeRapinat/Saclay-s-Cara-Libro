@@ -28,7 +28,7 @@ import javax.swing.JTextArea;
 import controleur.Controleur_Mur;
 import controleur.Controleur_Utilisateur;
 
-public class Vue_Mur { //extends JFrame {
+public class Vue_Mur { 
 
 	private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class Vue_Mur { //extends JFrame {
 	public Vue_Mur(Controleur_Mur controleurMur) {
 
 		this.controleurMur = controleurMur;
-		
+	
 	}
 
 	
@@ -104,11 +104,11 @@ public class Vue_Mur { //extends JFrame {
 		textePublier = new JTextArea(texte);
 			JScrollPane scrollPaneArea = new JScrollPane(textePublier,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			textePublier.setCaretPosition(0); // set scrollPane to the top
-			textePublier.setFont(new Font("Helvetica", Font.BOLD, 14));
 			textePublier.setLineWrap(true);
 			textePublier.setWrapStyleWord(true);
 			textePublier.setEditable(false);
 			textePublier.setFont(f4);
+			textePublier.setBackground(new Color(255,248,192));
 			scrollPaneArea.setPreferredSize(new Dimension(500, 60));
 		panneauPublier.add(scrollPaneArea);
 
@@ -117,13 +117,13 @@ public class Vue_Mur { //extends JFrame {
 			boutonAimer.setOpaque(false);
 			boutonAimer.setBorderPainted(false);
 			boutonAimer.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+			boutonAimer.setPreferredSize(new Dimension(94,44));
 		boutonCommenter = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_commenter_petit.png")));
 			boutonCommenter.setBackground(new Color(0, 0, 0));
 			boutonCommenter.setOpaque(false);
 			boutonCommenter.setBorderPainted(false);
 			boutonCommenter.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			
+			boutonCommenter.setPreferredSize(new Dimension(94,44));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -204,6 +204,10 @@ public class Vue_Mur { //extends JFrame {
 		
 		nbrAime.setActionCommand(Controleur_Mur.ACTION_LISTE_AIME);
 		nbrAime.addActionListener(controleurMur);
+		boutonCommenter.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
+		boutonCommenter.addActionListener(controleurMur);
+		nbrCom.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
+		nbrCom.addActionListener(controleurMur);
 		
 		
 		
@@ -259,11 +263,11 @@ public class Vue_Mur { //extends JFrame {
 	textePublier = new JTextArea(texte);
 		JScrollPane scrollPaneArea = new JScrollPane(textePublier,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		textePublier.setCaretPosition(0); // set scrollPane to the top
-		textePublier.setFont(new Font("Helvetica", Font.BOLD, 14));
 		textePublier.setLineWrap(true);
 		textePublier.setWrapStyleWord(true);
 		textePublier.setEditable(false);
 		textePublier.setFont(f4);
+		textePublier.setBackground(new Color(255,248,192));
 		scrollPaneArea.setPreferredSize(new Dimension(500, 80));
 	panneauPublier.add(scrollPaneArea);
 
@@ -366,7 +370,10 @@ public class Vue_Mur { //extends JFrame {
 	
 	nbrAime.setActionCommand(Controleur_Mur.ACTION_LISTE_AIME);
 	nbrAime.addActionListener(controleurMur);
-	
+	boutonCommenter.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
+	boutonCommenter.addActionListener(controleurMur);
+	nbrCom.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
+	nbrCom.addActionListener(controleurMur);
 	
 	
 

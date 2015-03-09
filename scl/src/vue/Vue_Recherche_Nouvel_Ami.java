@@ -109,14 +109,18 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 		bouton.add(labelNom, gbc);	
 		if (ami) {
 			dejaAmi = new JLabel ("Ami(e)");
-			dejaAmi.setPreferredSize(new Dimension (60, 10));
-			dejaAmi.setFont(Vue_Mur.f4);
+				dejaAmi.setPreferredSize(new Dimension (60, 10));
+				dejaAmi.setFont(Vue_Mur.f4);
 			gbc.gridx = 3;
 			gbc.gridy = 1;
 			gbc.gridheight = gbc.gridwidth = 1;
 			gbc.anchor = GridBagConstraints.ABOVE_BASELINE_TRAILING;
 			gbc.insets = new Insets(-30, 0, 0, 0);
+			
 			bouton.add(dejaAmi, gbc);	
+			bouton.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_D_UN_AMI);
+			bouton.addActionListener(controleurUtilisateur);
+			
 		}
 		else {
 			demanderAmi = new JButton("+ ami(e)");
@@ -125,6 +129,9 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 			
 			demanderAmi.setActionCommand(Controleur_Utilisateur.ACTION_DEMANDER_AMI);
 			demanderAmi.addActionListener(controleurUtilisateur);
+			
+			bouton.setActionCommand(Controleur_Utilisateur.ACTION_PAS_POUVOIR_VOIR_PROFIL);
+			bouton.addActionListener(controleurUtilisateur);
 			
 			gbc.gridx = 3;
 			gbc.gridy = 1;

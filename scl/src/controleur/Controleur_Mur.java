@@ -5,30 +5,37 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import vue.Vue_Accueil;
+import vue.Vue_Liste_Commentaires;
 import vue.Vue_Liste_Jaime;
-import vue.Vue_Mur;
+
 
 public class Controleur_Mur implements ActionListener {
-	private JFrame vuePubli;
-	public static final String ACTION_LISTE_AIME = "LISTE_AIME";
+	public static final String ACTION_LISTE_AIME = "LISTE AIME";
 	public static final String ACTION_PUBLIER = "PUBLIER";
+	public static final String ACTION_LISTE_COMMENTAIRES = "LISTE COMMENTAIRES";
 	
-
+public Controleur_Mur() {
+		
+	}
 	// constantes pour les actionCommand
 	
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent ae) {
 		
-		switch(e.getActionCommand()) {
-		
+		switch(ae.getActionCommand()) {
+			
 		case ACTION_LISTE_AIME:
 			listeAime();
 			break;
+		case ACTION_LISTE_COMMENTAIRES:
+			listeCommentaires();
+			break;
 		}
 	}
-	public Controleur_Mur() {
+	private void listeCommentaires() {
+		Vue_Liste_Commentaires vueC = new Vue_Liste_Commentaires();
+		vueC.setVisible(true);
 		
 	}
 		
