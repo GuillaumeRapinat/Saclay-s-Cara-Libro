@@ -112,6 +112,9 @@ public class Vue_Mur {
 			scrollPaneArea.setPreferredSize(new Dimension(500, 60));
 		panneauPublier.add(scrollPaneArea);
 
+		JButton boutonSignaler = new JButton("Signaler");
+			boutonSignaler.setBackground(Vue_Utilisateur.marron);
+			boutonSignaler.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		boutonAimer = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_jaime.png")));
 			boutonAimer.setBackground(new Color(0, 0, 0));
 			boutonAimer.setOpaque(false);
@@ -170,12 +173,20 @@ public class Vue_Mur {
 		gbc.insets = new Insets(0, -20, 0, 0);
 		panel.add(panneauPublier, gbc);
 
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridheight = 1;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		gbc.insets = new Insets(0, -20, 0, 0);
+		panel.add(boutonSignaler, gbc);
+		
 		gbc.gridx = 8;
 		gbc.gridy = 4;
 		gbc.gridheight = 1;
 		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
-		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.insets = new Insets(0, 30, 0, 0);
 		panel.add(boutonAimer, gbc);
 
 		gbc.gridx = 6;
@@ -183,7 +194,7 @@ public class Vue_Mur {
 		gbc.gridheight = 1;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
-		gbc.insets = new Insets(0, -110, 0, 0);
+		gbc.insets = new Insets(0, -90, 0, 0);
 		panel.add(boutonCommenter, gbc);
 
 		gbc.gridx = 5;
@@ -208,6 +219,8 @@ public class Vue_Mur {
 		boutonCommenter.addActionListener(controleurMur);
 		nbrCom.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
 		nbrCom.addActionListener(controleurMur);
+		boutonSignaler.setActionCommand(Controleur_Mur.ACTION_SIGNALER);
+		boutonSignaler.addActionListener(controleurMur);
 		
 		
 		
@@ -271,6 +284,9 @@ public class Vue_Mur {
 		scrollPaneArea.setPreferredSize(new Dimension(500, 80));
 	panneauPublier.add(scrollPaneArea);
 
+	JButton boutonSignaler = new JButton("Signaler");
+	boutonSignaler.setBackground(Vue_Utilisateur.marron);
+	boutonSignaler.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	boutonAimer = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_jaime.png")));
 		boutonAimer.setBackground(new Color(0, 0, 0));
 		boutonAimer.setOpaque(false);
@@ -329,12 +345,20 @@ public class Vue_Mur {
 	gbc.insets = new Insets(0, 0, 0, 0);
 	panel.add(panneauPublier, gbc);
 
+	gbc.gridx = 0;
+	gbc.gridy = 4;
+	gbc.gridheight = 1;
+	gbc.gridwidth = 1;
+	gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+	gbc.insets = new Insets(0, 0, 0, 0);
+	panel.add(boutonSignaler, gbc);
+		
 	gbc.gridx = 8;
 	gbc.gridy = 4;
 	gbc.gridheight = 1;
 	gbc.gridwidth =12;
 	gbc.anchor = GridBagConstraints.BASELINE_LEADING;
-	gbc.insets = new Insets(0, -140, 0, 0);
+	gbc.insets = new Insets(-5, -140, 0, 0);
 	panel.add(boutonAimer, gbc);
 
 	gbc.gridx = 6;
@@ -342,7 +366,7 @@ public class Vue_Mur {
 	gbc.gridheight = 1;
 	gbc.gridwidth = 2;
 	gbc.anchor = GridBagConstraints.BASELINE_LEADING;
-	gbc.insets = new Insets(0, -110, 0, 0);
+	gbc.insets = new Insets(-5, -110, 0, 0);
 	panel.add(boutonCommenter, gbc);
 
 	gbc.gridx = 5;

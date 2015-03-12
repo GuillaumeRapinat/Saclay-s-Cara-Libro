@@ -97,6 +97,7 @@ public class Vue_Liste_Jaime extends JFrame {
 		gbc.insets = new Insets(0, 0, 0, 0);
 		bouton.add(labelNom, gbc);	
 		
+		bouton.setBackground(Vue_Utilisateur.marronclair);
 		return bouton;
 		
 	}

@@ -138,10 +138,11 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 			gbc.gridheight = gbc.gridwidth = 2;
 			gbc.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
 			gbc.insets = new Insets(-30, 0, 0, 0);
+			demanderAmi.setBackground(Vue_Utilisateur.marron);
 			bouton.add(demanderAmi, gbc);	
 		}
 
-		
+		bouton.setBackground(Vue_Utilisateur.marronclair);
 		return bouton;
 		
 	}

@@ -51,6 +51,9 @@ public class Controleur_Utilisateur implements ActionListener {
 	public static final String ACTION_PROFIL_PERSONNEL = "VOIR SON PROFIL";
 	public static final String ACTION_SUPPRIMER_AMI = "SUPPRIMER DE LA LISTE D'AMIS";
 	public static final String ACTION_ENVOYER_MESSAGE = "ENVOYER_MESSAGE";
+	
+	////////////////ADMIN////////////////
+//	public static final String ACTION_LISTE_SIGNALEMENTS = "LISTE DES SIGNALEMENTS";
 
 	
 
@@ -63,6 +66,7 @@ public class Controleur_Utilisateur implements ActionListener {
 	private JFrame vue5;
 	private JFrame vueAmi;
 	private JFrame vueM;
+	private JFrame vueS;
 	private JFileChooser fc;
 //////////////////////////////	
 	public Controleur_Utilisateur() {
@@ -163,6 +167,8 @@ public class Controleur_Utilisateur implements ActionListener {
 		case ACTION_REACTIVER_COMPTE:
 			reactiverCompte();
 			break;
+//////ADMIN//////
+		
 		}
 	}
 

@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
@@ -58,11 +59,8 @@ public class Vue_Message extends JFrame {
 
 		
 		panel.add(titreMessageRecu("Marion", "Peral", "Les courses de ce soir", "09/03/2015", "14:02:34", false));
-		panel.add(Box.createRigidArea(new Dimension(0,10)));
 		panel.add(titreMessageRecu("Jean", "qule", "Bonjour toi ... ;)", "07/02/2015", "23:38:18", false));
-		panel.add(Box.createRigidArea(new Dimension(0,10)));
 		panel.add(titreMessageRecu("Marion", "Peral", "Tu fais quoi? <3", "05/02/2015", "11:15:56", true));
-		panel.add(Box.createRigidArea(new Dimension(0,10)));
 				
 		
 		JScrollPane jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -75,6 +73,7 @@ public class Vue_Message extends JFrame {
 		this.getContentPane().setBackground(Vue_Utilisateur.marron);
 		this.pack();
 		this.setPreferredSize(new Dimension (500, 600));
+		this.setLocation(550, 180);
 
 
 		
@@ -174,8 +173,12 @@ public class Vue_Message extends JFrame {
 		JTextArea texteMessage;
 		JScrollPane scrollPaneArea; 
 		
+		Controleur_Message controleurMessage = new Controleur_Message();
+		
 		
 		JFrame frame = new JFrame();
+		frame.setLayout(new GridBagLayout());
+		
 		
 		labelNom = new JLabel (nom);
 			labelNom.setFont(f7);
@@ -191,17 +194,22 @@ public class Vue_Message extends JFrame {
 			labelHeure.setFont(f7);
 			
 		boutonSupprimer = new JButton ("Supprimer");
+			boutonSupprimer.setBackground(Vue_Utilisateur.marronclair);
 		boutonRepondre = new JButton ("Repondre");
-			
+			boutonRepondre.setBackground(Vue_Utilisateur.marronclair);
+		
+		
 			//Messages
 		JPanel panneauMessage = new JPanel();
 	    panneauMessage.setLayout(new FlowLayout());
-	    texteMessage = new JTextArea("Exprimez-vous");
+	    texteMessage = new JTextArea(texte);
 		    scrollPaneArea = new JScrollPane(texteMessage,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		    texteMessage.setCaretPosition(0); //set scrollPane to the top  
-			texteMessage.setFont(new Font("Helvetica", Font.BOLD, 14));
+			texteMessage.setFont(new Font("Helvetica", Font.BOLD + Font.ITALIC, 12));
 			texteMessage.setLineWrap(true);
 			texteMessage.setWrapStyleWord(true);
+			texteMessage.setEditable(false);
+			texteMessage.setBackground(Vue_Accueil.beige);
 			scrollPaneArea.setPreferredSize(new Dimension(300, 120)); 
 		panneauMessage.add(scrollPaneArea);
 		
@@ -221,8 +229,6 @@ public class Vue_Message extends JFrame {
 		gbc.anchor = GridBagConstraints.BELOW_BASELINE_LEADING;
 		gbc.insets = new Insets(0, 10, 0, 0);
 		frame.add(labelNom, gbc);
-		
-		
 		
 		gbc.gridx = 3;
 		gbc.gridy = 0;
@@ -263,26 +269,136 @@ public class Vue_Message extends JFrame {
 		gbc.insets = new Insets(10, 0, 0, 0);
 		frame.add(boutonRepondre, gbc);
 		
-		gbc.gridx = 2;
+		gbc.gridx = 3;
+		gbc.gridy = 3;
+		gbc.gridheight = 1;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		frame.add(boutonSupprimer, gbc);		
+			
+			//Action de chaque composant
+		boutonRepondre.setActionCommand(Controleur_Message.ACTION_REPONDRE);
+		boutonRepondre.addActionListener(controleurMessage);
+		boutonSupprimer.setActionCommand(Controleur_Message.ACTION_SUPPRIMER);
+		boutonSupprimer.addActionListener(controleurMessage);
+	
+		//frame.setBackground(Vue_Utilisateur.marronclair);
+		
+		frame.setTitle("Boite de messagerie");
+		frame.pack();
+		frame.setLocation(250, 180);
+		frame.setVisible(true);
+	}
+
+
+	public static void repondre(String prenom, String nom) {
+		
+		JLabel labelNom;
+		JLabel labelPrenom;
+		JLabel labelTitre;		
+		JButton boutonAnnuler;
+		JButton boutonEnvoyer;
+		
+		JTextArea texteMessage;
+		JScrollPane scrollPaneArea; 
+		Controleur_Message controleurMessage = new Controleur_Message();
+
+		
+		JFrame frame = new JFrame();
+		frame.setLayout(new GridBagLayout());
+		
+		
+		labelNom = new JLabel (nom);
+			labelNom.setFont(f7);
+		labelPrenom = new JLabel (prenom);
+			labelPrenom.setFont(f7);
+			
+		labelTitre = new JLabel("titre");
+			labelTitre.setFont(f6);
+				
+		boutonAnnuler = new JButton ("Annuler");
+			boutonAnnuler.setBackground(Vue_Utilisateur.marronclair);
+		boutonEnvoyer = new JButton ("Envoyer");
+			boutonEnvoyer.setBackground(Vue_Utilisateur.marronclair);
+		
+		
+			//Messages
+		JPanel panneauMessage = new JPanel();
+	    panneauMessage.setLayout(new FlowLayout());
+	    texteMessage = new JTextArea("Ecriver votre message");
+		    scrollPaneArea = new JScrollPane(texteMessage,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		    texteMessage.setCaretPosition(0); //set scrollPane to the top  
+			texteMessage.setFont(new Font("Helvetica", Font.BOLD + Font.ITALIC, 12));
+			texteMessage.setLineWrap(true);
+			texteMessage.setWrapStyleWord(true);
+			texteMessage.setBackground(Vue_Accueil.beige);
+			scrollPaneArea.setPreferredSize(new Dimension(300, 120)); 
+		panneauMessage.add(scrollPaneArea);
+		
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BELOW_BASELINE_LEADING;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		frame.add(labelPrenom, gbc);
+		
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BELOW_BASELINE_LEADING;
+		gbc.insets = new Insets(0, 10, 0, 0);
+		frame.add(labelNom, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridheight = 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.BELOW_BASELINE_LEADING;
+		gbc.insets = new Insets(0, 10, 0, 0);
+		frame.add(labelTitre, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridheight = 1;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.BELOW_BASELINE_LEADING;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		frame.add(panneauMessage, gbc);
+		
+	
+		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridheight = 1;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.BASELINE;
 		gbc.insets = new Insets(10, 0, 0, 0);
-		frame.add(boutonSupprimer, gbc);		
+		frame.add(boutonEnvoyer, gbc);
+		
+		gbc.gridx = 3;
+		gbc.gridy = 3;
+		gbc.gridheight = 1;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+		gbc.insets = new Insets(10, 0, 0, 0);
+		frame.add(boutonAnnuler, gbc);		
 			
 			//Action de chaque composant
-/*		boutonRepondre.setActionCommand(Controleur_Message.ACTION_REPONDRE);
-		boutonRepondre.addActionListener(controleurMessage);
-		boutonSupprimer.setActionCommand(Controleur_Message.ACTION_SUPPRIMER);
+		boutonEnvoyer.setActionCommand(Controleur_Message.ACTION_ENVOYER);
+		boutonEnvoyer.addActionListener(controleurMessage);
+/*		boutonSupprimer.setActionCommand(Controleur_Message.ACTION_SUPPRIMER);
 		boutonSupprimer.addActionListener(controleurMessage);
 */	
 		//frame.setBackground(Vue_Utilisateur.marronclair);
 		
-		frame.setTitle("Boite de messagerie");
+		frame.setTitle("Nouveau Message");
 		frame.pack();
-		//frame.setPreferredSize(new Dimension (500, 600));
+		frame.setLocation(560, 180);
 		frame.setVisible(true);
+		
 	}
 	
 	

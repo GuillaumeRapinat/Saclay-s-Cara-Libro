@@ -62,12 +62,11 @@ public class Vue_Liste_Commentaires extends JFrame{
 		//getClass().getClassLoader().getResource("images/profil_tout_petit.png")
 		panelC.add(commentaire(getClass().getClassLoader().getResource("images/profil_tout_petit.png"), "Guillaume", "Rapinat", "ba be bi bo bu", "08/03/2015", "15:57:34", 3));
 		panelC.add(Box.createRigidArea(new Dimension(0,10)));
-		panelC.add(Box.createRigidArea(new Dimension(0,10)));
 		panelC.add(commentaire(getClass().getClassLoader().getResource("images/profil_tout_petit.png"), "Estelle", "Malherbe", "guillaume t'es un gamin, je vais te supprimer de maliste d'amis", "09/03/2015", "12:35:34", 7));
 		panelC.add(Box.createRigidArea(new Dimension(0,10)));
 		panelC.add(commentaire(getClass().getClassLoader().getResource("images/profil_tout_petit.png"), "Wilfried", "Rabouin", "personne ne veux voir ma bite alors??", "09/03/2015", "14:30:00", 0));
 		panelC.add(Box.createRigidArea(new Dimension(0,10)));
-		panelC.add(commentaire(getClass().getClassLoader().getResource("images/profil_tout_petit.png"), "Guillaume", "Rapinat", "blou bleuh blu blah boooooooo!!!!", "09/03/2015", "15:47:39", 2));
+		panelC.add(commentaire(getClass().getClassLoader().getResource("images/profil_tout_petit.png"), "Guillaume", "Rapinat", "blou\n bleuh\n  blu\n   blah\n    boooooooo!!!!", "09/03/2015", "15:47:39", 2));
 		panelC.add(Box.createRigidArea(new Dimension(0,10)));
 		panelC.add(commentaire(getClass().getClassLoader().getResource("images/profil_tout_petit.png"), "Estelle", "Malherbe", "NON WILFRIED! Et ok Guillaume je te supprime", "09/03/2015", "17:02:10", 19));
 		
@@ -80,9 +79,7 @@ public class Vue_Liste_Commentaires extends JFrame{
 		
 		this.setTitle("Liste de commentaires");
 		this.pack();
-		//this.setLocation(800, 200);
-		this.setSize(500, 600);
-		
+		this.setSize(400, 500);
 		
 	}
 
@@ -91,6 +88,7 @@ public class Vue_Liste_Commentaires extends JFrame{
 	public JPanel commentaire(URL photo, String prenom, String nom, String texte, String Date, String Heure, int nbA) {
 		
 		JPanel panel = new JPanel();
+		controleurMur = new Controleur_Mur();
 		panel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.BLACK));
 		panel.setBackground(Vue_Utilisateur.marronclair);
 		panel.setLayout(new GridBagLayout());
@@ -114,39 +112,38 @@ public class Vue_Liste_Commentaires extends JFrame{
 			nbrAime.setBorderPainted(false);
 			nbrAime.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	
-//		JPanel panneauCommentaires = new JPanel();
-		JLabel texteCommentaire = new JLabel(texte);
+		JPanel panneauCommentaires = new JPanel();
+		JTextArea texteCommentaire = new JTextArea(texte);
 		texteCommentaire.setBackground(Vue_Utilisateur.marron);
-//			JScrollPane scrollPaneArea = new JScrollPane(texteCommentaire,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-			//textePublier.setCaretPosition(0); // set scrollPane to the top
-//			textePublier.setLineWrap(true);
-//			textePublier.setWrapStyleWord(true);
-//			texteCommentaire.setEditable(false);
-			texteCommentaire.setFont(f5);
-			//textePublier.setBackground(Vue_Utilisateur.marronclair);
-//			scrollPaneArea.setPreferredSize(new Dimension(200, 50));
-//		panneauCommentaires.add(scrollPaneArea);
+			JScrollPane scrollPaneArea = new JScrollPane(texteCommentaire,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		    texteCommentaire.setCaretPosition(MAXIMIZED_VERT); //set scrollPane to the top
+			texteCommentaire.setFont(Vue_Message.f6);
+			texteCommentaire.setLineWrap(true);
+			texteCommentaire.setWrapStyleWord(true);
+			texteCommentaire.setEditable(false);
+			texteCommentaire.setBackground(Vue_Utilisateur.marronclair);
+			scrollPaneArea.setBorder(null);
+			scrollPaneArea.setPreferredSize(new Dimension(315, 40));
+			panneauCommentaires.setOpaque(false);
+		panneauCommentaires.add(scrollPaneArea);
 
-		boutonAimer = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_jaime.png")));
+/*		boutonAimer = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_jaime_applatit.png")));
 			boutonAimer.setBackground(new Color(0, 0, 0));
 			boutonAimer.setOpaque(false);
 			boutonAimer.setBorderPainted(false);
 			boutonAimer.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			boutonAimer.setPreferredSize(new Dimension(94,44));
-
-/*			boutonCommenter = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_commenter_petit.png")));
-			boutonCommenter.setBackground(new Color(0, 0, 0));
-			boutonCommenter.setOpaque(false);
-			boutonCommenter.setBorderPainted(false);
-			boutonCommenter.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			boutonCommenter.setPreferredSize(new Dimension(94,44));
-*/	
+*/
+		boutonAimer = new JButton("J'aime");
+		boutonAimer.setFont(new Font("Helvetica", Font.BOLD + Font.ITALIC, 16));
+		boutonAimer.setBackground(Vue_Utilisateur.marron);
 			
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.gridheight = 2;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
 		gbc.insets = new Insets(0, -20, 0, 0);
 		panel.add(photoProfil, gbc);
@@ -198,8 +195,8 @@ public class Vue_Liste_Commentaires extends JFrame{
 		gbc.gridheight = 1;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.anchor = GridBagConstraints.BASELINE;
-		gbc.insets = new Insets(0, 0, 0, 0);
-		panel.add(texteCommentaire, gbc);
+		gbc.insets = new Insets(0, -35, 0, 0);
+		panel.add(panneauCommentaires, gbc);
 		
 		
 /*		gbc.gridx = 6;

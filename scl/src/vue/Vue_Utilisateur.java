@@ -170,10 +170,14 @@ public class Vue_Utilisateur extends JFrame {
 			boutonAjouter.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			boutonAjouter.setPreferredSize(new Dimension(57, 57));
 		panneauAjouter.add(boutonAjouter);
-			
-			
-			
-			
+		
+//titre image qui va changé/apparaitre selon le résultat de l'ajout
+//c'est un bouton qui fonctionne que s'il y a une image et qui permet de supprimer l'image téléchargé
+		JButton titreImage = new JButton("titre image téléchargé");
+			titreImage.setBackground(null);
+			titreImage.setBorderPainted(false);
+			titreImage.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
 		boutonDeconnection = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_deconnect.png")));
 			boutonDeconnection.setBackground(new Color(0, 0, 0));
 			boutonDeconnection.setOpaque(false);
@@ -217,9 +221,12 @@ public class Vue_Utilisateur extends JFrame {
 			barreRechercher.setCursor(new Cursor(Cursor.TEXT_CURSOR));
 		JButton boutonRechercher = new JButton("Rechercher");
 		boutonRechercher.setFont(Vue_Mur.f4);
+		boutonRechercher.setBackground(marronclair);
 		boutonRechercher.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			
 		boutonChat = new JButton("Chat");
+			boutonChat.setFont(Vue_Mur.f4);
+			boutonChat.setBackground(marronclair);
 			
 		this.getContentPane().setBackground(Vue_Utilisateur.marron);
 		
@@ -286,12 +293,21 @@ public class Vue_Utilisateur extends JFrame {
 		gbc.insets = new Insets(-20, 150, 0, 0);
 		this.add(boutonPublier, gbc);
 		
+		gbc.gridx = 4;
+		gbc.gridy = 4;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		gbc.insets = new Insets(-20, -90, 0, -50);
+		this.add(titreImage, gbc);
+		
 		gbc.gridx = 3;
 		gbc.gridy = 4;
 		gbc.gridheight = gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
 		gbc.insets = new Insets(-40, -215, 0, -50);
 		this.add(panneauAjouter, gbc);
+		
+		
 		
 		gbc.gridx = 8;
 		gbc.gridy = 0;

@@ -1,0 +1,225 @@
+package controleur;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import modele.Modele_Utilisateur;
+import vue.ImagePreview;
+import vue.Vue_Accueil;
+import vue.Vue_Admin;
+import vue.Vue_Liste_Amis;
+import vue.Vue_Recherche;
+import vue.Vue_Utilisateur;
+
+public class Controleur_Utilisateur implements ActionListener {
+	
+	// constantes pour les actionCommand
+	public static final String ACTION_CONNEXION = "CONNEXION";
+	public static final String ACTION_CREER_COMPTE = "CREER COMPTE";
+	public static final String ACTION_DECONNEXION = "DECONNEXION";
+	public static final String ACTION_MODIFIER_PROFIL = "MODIFIER PROFIL";
+	public static final String ACTION_REACTIVER_COMPTE = "REACTIVER COMPTE";
+	public static final String ACTION_TERMINER = "TERMINER";
+	public static final String ACTION_RECHERCHER = "RECHERCHER";
+	public static final String ACTION_CHANGER_PHOTO_PROFIL = "CHANGER PHOTO PROFIL";
+	public static final String ACTION_LISTER_AMIS = "LISTE D'AMIS";
+
+	private Modele_Utilisateur modeleUtilisateur;
+	private JFrame vue;
+	
+	public Controleur_Utilisateur() {
+		modeleUtilisateur = new Modele_Utilisateur();
+		vue = new Vue_Accueil(this);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		switch(e.getActionCommand()) {
+		case ACTION_CONNEXION:
+			connexion();
+			break;
+		case ACTION_CREER_COMPTE:
+			creerCompte();
+			break;
+		case ACTION_DECONNEXION:
+			deconnexion();
+			break;
+		case ACTION_REACTIVER_COMPTE:
+			reactiverCompte();
+			break;
+		case ACTION_MODIFIER_PROFIL:
+			((Vue_Utilisateur) vue).modifierProfil();
+			break;
+		case ACTION_TERMINER:
+			miseAJour();
+			break;
+		case ACTION_RECHERCHER:
+			String recherche = ((Vue_Utilisateur) vue).getRecherche();  // on recupère la recherche
+			Vector<Modele_Utilisateur> resultatRecherche = Modele_Utilisateur.rechercher(recherche);  // on exécute la recherche
+			if (resultatRecherche.size() > 0) new Vue_Recherche(this, resultatRecherche);  // on affiche le résultat de la recherche
+			else							  JOptionPane.showMessageDialog(new JDialog(),"Aucun résultat trouvé pour '" + recherche + "'.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case ACTION_CHANGER_PHOTO_PROFIL:
+			parcourirImage();
+			break;
+		case ACTION_LISTER_AMIS:
+			Vector<Modele_Utilisateur> amis = modeleUtilisateur.listerAmis();
+			if (amis.size() > 0) new Vue_Liste_Amis(this, amis);
+			else				 JOptionPane.showMessageDialog(new JDialog(),"Vous n'avez aucun amis... C'est bien triste :(", "Liste d'amis vide", JOptionPane.INFORMATION_MESSAGE);
+			break;
+		}
+	}
+
+	private void deconnexion() {
+		vue.setVisible(false);
+		vue.dispose();
+		vue = new Vue_Accueil(this);
+	}
+
+	private void connexion() {
+		String mail = ((Vue_Accueil) vue).getMail();
+		String motDePasse = ((Vue_Accueil) vue).getMotDePasse();
+		
+		switch(modeleUtilisateur.connexion(mail, motDePasse)) {
+		case "UTILISATEUR":
+			vue.setVisible(false);
+			vue.dispose();
+			vue = new Vue_Utilisateur(this, modeleUtilisateur);
+			break;
+		case "ADMIN":
+			vue.setVisible(false);
+			vue.dispose();
+			vue = new Vue_Admin(this);
+			break;
+		case "ERREUR CONNEXION":
+			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la tentative de connexion. Le compte est peut-être inexistant.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR MDP":
+			JOptionPane.showMessageDialog(new JDialog(),"Mot de passe incorrect.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR ACTIF":
+			JOptionPane.showMessageDialog(new JDialog(),"Ce compte est désactivé. Veuillez le réactiver avant de vous connecter.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR BLOQUE":
+			JOptionPane.showMessageDialog(new JDialog(),"Ce compte a été bloqué par l'administrateur.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR SERVEUR":
+			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		}
+	}
+
+	private void creerCompte() {
+		String mail = ((Vue_Accueil) vue).getMail();
+		String motDePasse = ((Vue_Accueil) vue).getMotDePasse();
+		
+		switch(Modele_Utilisateur.creerCompte(mail, motDePasse)) {
+		case "SUCCES":
+			JOptionPane.showMessageDialog(new JDialog(),"Le compte a bien été créé. Vous pouvez dès à présent vous connecter avec ce compte.", "Création de compte réussie", JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case "ERREUR CREATION":
+			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la création de compte.\nL'adresse électronique est peut-être déjà utilisée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR MAIL":
+			JOptionPane.showMessageDialog(new JDialog(),"Adresse électronique non valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR MDP":
+			JOptionPane.showMessageDialog(new JDialog(),"Mot de passe non valide. Le mot de passe doit contenir au moins 7 caractères.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR SERVEUR":
+			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		}
+		
+	}
+	
+	private void reactiverCompte() {
+		String login = ((Vue_Accueil) vue).getMail();
+		String motDePasse =  ((Vue_Accueil) vue).getMotDePasse();
+		
+		switch(Modele_Utilisateur.reactiverCompte(login, motDePasse)) {
+		case "SUCCES":
+			JOptionPane.showMessageDialog(new JDialog(),"Le compte a bien été réactivé. Vous pouvez dès à présent vous connecter avec ce compte.", "Réactivation de compte réussie", JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case "ERREUR REACTIVATION":
+			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la réactivation du compte.\nLe compte est peut-être inexistant.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR MDP":
+			JOptionPane.showMessageDialog(new JDialog(),"Le mot de passe est incorrect.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR ACTIF":
+			JOptionPane.showMessageDialog(new JDialog(),"Ce compte est toujours actif.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR BLOQUE":
+			JOptionPane.showMessageDialog(new JDialog(),"Ce compte a été bloqué par l'administrateur et ne peut être réactivé.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "ERREUR SERVEUR":
+			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;
+		}
+	}
+	
+	private void miseAJour() {
+		// récupère les valeurs de la vue et met à jour le modele
+		modeleUtilisateur.setNom(((Vue_Utilisateur) vue).getNom());
+		modeleUtilisateur.setPrenom(((Vue_Utilisateur) vue).getPrenom());
+		modeleUtilisateur.setAge(((Vue_Utilisateur) vue).getAge());
+		modeleUtilisateur.setSexe(((Vue_Utilisateur) vue).getSexe());
+					
+		((Vue_Utilisateur) vue).terminer();  // remet la vue par défault
+		
+		switch(modeleUtilisateur.miseAJour()) {
+		case "SUCCES":
+			JOptionPane.showMessageDialog(new JDialog(),"Le profil a été modifié avec succès.", "Modification du profil", JOptionPane.INFORMATION_MESSAGE);
+			break;
+		case "ERREUR UPDATE":
+			JOptionPane.showMessageDialog(new JDialog(),"Impossible de mettre à jour le profil.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			break;	
+		case "ERREUR SERVEUR":
+			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			deconnexion();
+			break;
+		}
+	}
+	
+	private void parcourirImage() {
+        JFileChooser fc = new JFileChooser();
+
+        FileNameExtensionFilter filtre = new FileNameExtensionFilter("Images", "jpeg", "png", "jpg", "gif", "bmp");
+        fc.setFileFilter(filtre);
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.setAccessory(new ImagePreview(fc));
+        
+        int returnVal = fc.showDialog(fc, "Modifier la photo de profil");
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+        	String fichier = fc.getSelectedFile().getAbsolutePath();
+        	
+        	switch(modeleUtilisateur.changerPhoto(fichier)) {
+        	case "SUCCES":
+        		((Vue_Utilisateur) vue).redessinerPhoto();
+        		break;
+        	case "ERREUR TAILLE":
+        		JOptionPane.showMessageDialog(new JDialog(),"La taille du fichier ne doit pas excéder 500kb.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        		break;
+        	case "ERREUR FICHIER":
+        		JOptionPane.showMessageDialog(new JDialog(),"Impossible de charger le fichier " + fc.getSelectedFile().getName() + ".", "Erreur", JOptionPane.ERROR_MESSAGE);
+        		break;
+        	case "ERREUR ENVOI":
+        		JOptionPane.showMessageDialog(new JDialog(),"L'image n'a pas pu être envoyée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        		break;
+        	case "ERREUR SERVEUR":
+    			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    			deconnexion();
+    			break;
+        	}
+        }
+	}
+	
+}

@@ -39,6 +39,7 @@ public class Vue_Accueil extends JFrame {
 	private JTextField texteLogin;
 	private JPasswordField champMotDePasse;
 	static Font f = new Font("Helvetica", Font.BOLD+Font.ITALIC, 26);
+	static Color beige = new Color(255,248,192);
 	
 	public Vue_Accueil(Controleur_Utilisateur controleurUtilisateur) {	
 		this.setLayout(new GridBagLayout());
@@ -49,7 +50,7 @@ public class Vue_Accueil extends JFrame {
 			labelLogin.setFont(f); 
 		texteLogin = new JTextField();
 			texteLogin.setFont(Vue_Utilisateur.f2);
-			texteLogin.setBackground(new Color(255,248,192));
+			texteLogin.setBackground(beige);
 			texteLogin.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			texteLogin.setCursor(new Cursor(Cursor.TEXT_CURSOR));
 			
@@ -58,7 +59,7 @@ public class Vue_Accueil extends JFrame {
 		champMotDePasse = new JPasswordField();
 			champMotDePasse.setFont(Vue_Utilisateur.f2);
 			champMotDePasse.setEchoChar('*');
-			champMotDePasse.setBackground(new Color(255,248,192));
+			champMotDePasse.setBackground(beige);
 			champMotDePasse.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			champMotDePasse.setCursor(new Cursor(Cursor.TEXT_CURSOR));
 			
