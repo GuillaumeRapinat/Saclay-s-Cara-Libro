@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.URL;
 
@@ -31,7 +33,7 @@ import controleur.Controleur_Message;
 public class Vue_Ami extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+	protected static int tempmouse = 0;
 	// composants de l'interface graphique
 	String s;
 	JPanel panneauMur;
@@ -139,6 +141,14 @@ public class Vue_Ami extends JFrame {
 			texteMessage.setFont(Vue_Mur.f4);
 			texteMessage.setCursor(new Cursor(Cursor.TEXT_CURSOR));
 			texteMessage.setBackground(new Color(255,248,192));
+			texteMessage.addMouseListener( new  MouseAdapter(){
+				 public void mousePressed(MouseEvent e) {
+					 if (Vue_Ami.tempmouse == 0){
+						 Vue_Ami.tempmouse = 1;
+					 	texteMessage.setText("");
+					 }
+				 }
+			});
 			scrollPaneArea.setPreferredSize(new Dimension(370, 90)); 
 			panneauMessage.add(scrollPaneArea);  
 			

@@ -8,6 +8,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,6 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import modele.Modele_Utilisateur;
 
 import controleur.Controleur_Utilisateur;
 
@@ -60,6 +65,8 @@ public class Vue_Admin extends JFrame{
 			labelTitreSignalement.setFont(f1);
 		JPanel panelSignalement = new JPanel();
 		panelSignalement.setLayout(new BoxLayout(panelSignalement, BoxLayout.Y_AXIS)); 
+		//		Vector<Modele_Utilisateur> lSignalements = new Vector<Modele_Utilisateur>;
+		 // 			data.listerSignalements()
 		
 		panelSignalement.add(signalement(4, 18, true, "Guillaume", "Rapinat", "10/03/15"));
 		panelSignalement.add(signalement(6, 19, true, "Marion", "Peral", "08/03/15"));
@@ -74,11 +81,23 @@ public class Vue_Admin extends JFrame{
 		
 		labelUtilisateurs = new JLabel("Liste des utilisateurs");
 			labelUtilisateurs.setFont(f1);
-			
-			
-		Vue_Table listUtilisateur = new Vue_Table();
-			
-		JTable table = new JTable(listUtilisateur);
+				
+/*		Vector<Modele_Utilisateur> data = new Vector<Modele_Utilisateur>;
+ * 			data.listerUtilisateurs()		*/			
+		Object[][] data = {
+			      {02, "Durand", "Marie", 19, false},
+			      {28, "Alesi", "Julie", 18, false},
+			      {54, "Michelet", "Jean", 24, true},
+			      {12, "Dupond", "Pierre", 18, true},
+			      {07, "Timberot", "Martin", 21, true},
+			      {9, "Gravatas", "Paul", 22, true}
+		};
+	    //Les titres des colonnes
+	    String  title[] = {"iD", "Prénom", "Nom", "Age", "Sexe"};
+			   
+		JTable table = new JTable(data, title);
+		table.setAutoCreateRowSorter(true);
+		//table.
 		JScrollPane scrollpan = new JScrollPane(table);
 		scrollpan.setPreferredSize(new Dimension(400, 100));
 		this.add(scrollpan);
@@ -94,11 +113,16 @@ public class Vue_Admin extends JFrame{
 			boutonDeconnection.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panneauDeconnection.add(boutonDeconnection);
 
-		JTextField barreRechercher = new JTextField ("Rechercher quelqu'un");
+		final JTextField barreRechercher = new JTextField ("Rechercher quelqu'un");
 			barreRechercher.setFont(f1);
 			barreRechercher.setBackground(new Color(255,248,192));
 			barreRechercher.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			barreRechercher.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			barreRechercher.addMouseListener(new  MouseAdapter(){
+				 public void mousePressed(MouseEvent e) {
+					 	barreRechercher.setText("");
+				 }
+			});
 		JButton boutonRechercher = new JButton("Rechercher");
 		boutonRechercher.setFont(Vue_Mur.f4);
 		boutonRechercher.setBackground(Vue_Utilisateur.marronclair);
@@ -127,7 +151,7 @@ public class Vue_Admin extends JFrame{
 		gbc.gridheight = 7;
 		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BASELINE;
-		gbc.insets = new Insets(-80, 0, 0, 0);
+		gbc.insets = new Insets(0, 0, 0, 0);
 		this.add(panelSignalement, gbc);
 
 		gbc.gridx = 1;
@@ -139,9 +163,10 @@ public class Vue_Admin extends JFrame{
 		
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.gridheight = 5;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.BASELINE;
-		gbc.insets = new Insets(10, 0, 0, 0);
+		gbc.insets = new Insets(0, 10, 0, 0);
 		this.add(scrollpan, gbc);
 				
 		gbc.gridx = 3;
@@ -206,6 +231,9 @@ public class Vue_Admin extends JFrame{
 		
 		boutonDeconnection.setActionCommand(Controleur_Utilisateur.ACTION_DECONNECTION);
 		boutonDeconnection.addActionListener(controleurUtilisateur);
+		boutonRechercher.setActionCommand(Controleur_Utilisateur.ACTION_RECHERCHER_AMIS);
+		boutonRechercher.addActionListener(controleurUtilisateur);
+
 	
 		// affichage de la fen�tre
 		this.setTitle("Panneau d'administration");

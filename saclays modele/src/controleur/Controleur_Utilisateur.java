@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -30,6 +31,7 @@ public class Controleur_Utilisateur implements ActionListener {
 	public static final String ACTION_RECHERCHER = "RECHERCHER";
 	public static final String ACTION_CHANGER_PHOTO_PROFIL = "CHANGER PHOTO PROFIL";
 	public static final String ACTION_LISTER_AMIS = "LISTE D'AMIS";
+	public static final String ACTION_DESACTIVER_COMPTE = "DESACTIVER COMPTE";
 
 	private Modele_Utilisateur modeleUtilisateur;
 	private JFrame vue;
@@ -47,6 +49,9 @@ public class Controleur_Utilisateur implements ActionListener {
 		case ACTION_CREER_COMPTE:
 			creerCompte();
 			break;
+		case ACTION_DESACTIVER_COMPTE:
+			desactiverCompte();
+			break;
 		case ACTION_DECONNEXION:
 			deconnexion();
 			break;
@@ -60,10 +65,10 @@ public class Controleur_Utilisateur implements ActionListener {
 			miseAJour();
 			break;
 		case ACTION_RECHERCHER:
-			String recherche = ((Vue_Utilisateur) vue).getRecherche();  // on recupère la recherche
-			Vector<Modele_Utilisateur> resultatRecherche = Modele_Utilisateur.rechercher(recherche);  // on exécute la recherche
-			if (resultatRecherche.size() > 0) new Vue_Recherche(this, resultatRecherche);  // on affiche le résultat de la recherche
-			else							  JOptionPane.showMessageDialog(new JDialog(),"Aucun résultat trouvé pour '" + recherche + "'.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
+			String recherche = ((Vue_Utilisateur) vue).getRecherche();  // on recupï¿½re la recherche
+			Vector<Modele_Utilisateur> resultatRecherche = Modele_Utilisateur.rechercher(recherche);  // on exï¿½cute la recherche
+			if (resultatRecherche.size() > 0) new Vue_Recherche(this, resultatRecherche);  // on affiche le rï¿½sultat de la recherche
+			else							  JOptionPane.showMessageDialog(new JDialog(),"Aucun rï¿½sultat trouvï¿½ pour '" + recherche + "'.", "Recherche", JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case ACTION_CHANGER_PHOTO_PROFIL:
 			parcourirImage();
@@ -73,6 +78,18 @@ public class Controleur_Utilisateur implements ActionListener {
 			if (amis.size() > 0) new Vue_Liste_Amis(this, amis);
 			else				 JOptionPane.showMessageDialog(new JDialog(),"Vous n'avez aucun amis... C'est bien triste :(", "Liste d'amis vide", JOptionPane.INFORMATION_MESSAGE);
 			break;
+		}
+	}
+
+	private void desactiverCompte() {
+		Object[] options2 = {"Oui! Bye bye Saclay's Cara Libro!", "Non non, je reste!"};
+		int n2 = JOptionPane.showOptionDialog(new JDialog(), "ÃŠtes-vous vraiment sÃ»r(e) de vouloir nous quitter??", "DÃ©sactiver son compte",
+				JOptionPane.YES_NO_OPTION,
+			    JOptionPane.QUESTION_MESSAGE,
+			    new ImageIcon(getClass().getClassLoader().getResource("images/notifications.png")),
+			    options2, options2[0]);
+		if (n2 == JOptionPane.YES_OPTION){
+			JOptionPane.showMessageDialog(new JDialog(), "Votre compte est dÃ©sactiver. Vous ne pourrez plus vous connecter et vos amis ne verrons plus votre profil.\nNous espÃ©rons bientÃ´t vous revoir rÃ©activer votre compte!", "Compte dÃ©sactivÃ©", JOptionPane.DEFAULT_OPTION, new ImageIcon(getClass().getClassLoader().getResource("images/logo_SCL_petit.png")));
 		}
 	}
 
@@ -98,16 +115,16 @@ public class Controleur_Utilisateur implements ActionListener {
 			vue = new Vue_Admin(this);
 			break;
 		case "ERREUR CONNEXION":
-			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la tentative de connexion. Le compte est peut-être inexistant.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la tentative de connexion. Le compte est peut-ï¿½tre inexistant.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR MDP":
 			JOptionPane.showMessageDialog(new JDialog(),"Mot de passe incorrect.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR ACTIF":
-			JOptionPane.showMessageDialog(new JDialog(),"Ce compte est désactivé. Veuillez le réactiver avant de vous connecter.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Ce compte est dï¿½sactivï¿½. Veuillez le rï¿½activer avant de vous connecter.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR BLOQUE":
-			JOptionPane.showMessageDialog(new JDialog(),"Ce compte a été bloqué par l'administrateur.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Ce compte a ï¿½tï¿½ bloquï¿½ par l'administrateur.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR SERVEUR":
 			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -121,16 +138,16 @@ public class Controleur_Utilisateur implements ActionListener {
 		
 		switch(Modele_Utilisateur.creerCompte(mail, motDePasse)) {
 		case "SUCCES":
-			JOptionPane.showMessageDialog(new JDialog(),"Le compte a bien été créé. Vous pouvez dès à présent vous connecter avec ce compte.", "Création de compte réussie", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Le compte a bien ï¿½tï¿½ crï¿½ï¿½. Vous pouvez dï¿½s ï¿½ prï¿½sent vous connecter avec ce compte.", "Crï¿½ation de compte rï¿½ussie", JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case "ERREUR CREATION":
-			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la création de compte.\nL'adresse électronique est peut-être déjà utilisée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la crï¿½ation de compte.\nL'adresse ï¿½lectronique est peut-ï¿½tre dï¿½jï¿½ utilisï¿½e.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR MAIL":
-			JOptionPane.showMessageDialog(new JDialog(),"Adresse électronique non valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Adresse ï¿½lectronique non valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR MDP":
-			JOptionPane.showMessageDialog(new JDialog(),"Mot de passe non valide. Le mot de passe doit contenir au moins 7 caractères.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Mot de passe non valide. Le mot de passe doit contenir au moins 7 caractï¿½res.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR SERVEUR":
 			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -145,10 +162,10 @@ public class Controleur_Utilisateur implements ActionListener {
 		
 		switch(Modele_Utilisateur.reactiverCompte(login, motDePasse)) {
 		case "SUCCES":
-			JOptionPane.showMessageDialog(new JDialog(),"Le compte a bien été réactivé. Vous pouvez dès à présent vous connecter avec ce compte.", "Réactivation de compte réussie", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Le compte a bien ï¿½tï¿½ rï¿½activï¿½. Vous pouvez dï¿½s ï¿½ prï¿½sent vous connecter avec ce compte.", "Rï¿½activation de compte rï¿½ussie", JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case "ERREUR REACTIVATION":
-			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la réactivation du compte.\nLe compte est peut-être inexistant.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Erreur lors de la rï¿½activation du compte.\nLe compte est peut-ï¿½tre inexistant.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR MDP":
 			JOptionPane.showMessageDialog(new JDialog(),"Le mot de passe est incorrect.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -157,7 +174,7 @@ public class Controleur_Utilisateur implements ActionListener {
 			JOptionPane.showMessageDialog(new JDialog(),"Ce compte est toujours actif.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR BLOQUE":
-			JOptionPane.showMessageDialog(new JDialog(),"Ce compte a été bloqué par l'administrateur et ne peut être réactivé.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Ce compte a ï¿½tï¿½ bloquï¿½ par l'administrateur et ne peut ï¿½tre rï¿½activï¿½.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "ERREUR SERVEUR":
 			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -166,20 +183,20 @@ public class Controleur_Utilisateur implements ActionListener {
 	}
 	
 	private void miseAJour() {
-		// récupère les valeurs de la vue et met à jour le modele
+		// rï¿½cupï¿½re les valeurs de la vue et met ï¿½ jour le modele
 		modeleUtilisateur.setNom(((Vue_Utilisateur) vue).getNom());
 		modeleUtilisateur.setPrenom(((Vue_Utilisateur) vue).getPrenom());
 		modeleUtilisateur.setAge(((Vue_Utilisateur) vue).getAge());
 		modeleUtilisateur.setSexe(((Vue_Utilisateur) vue).getSexe());
 					
-		((Vue_Utilisateur) vue).terminer();  // remet la vue par défault
+		((Vue_Utilisateur) vue).terminer();  // remet la vue par dï¿½fault
 		
 		switch(modeleUtilisateur.miseAJour()) {
 		case "SUCCES":
-			JOptionPane.showMessageDialog(new JDialog(),"Le profil a été modifié avec succès.", "Modification du profil", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Le profil a ï¿½tï¿½ modifiï¿½ avec succï¿½s.", "Modification du profil", JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case "ERREUR UPDATE":
-			JOptionPane.showMessageDialog(new JDialog(),"Impossible de mettre à jour le profil.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"Impossible de mettre ï¿½ jour le profil.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			break;	
 		case "ERREUR SERVEUR":
 			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -206,13 +223,13 @@ public class Controleur_Utilisateur implements ActionListener {
         		((Vue_Utilisateur) vue).redessinerPhoto();
         		break;
         	case "ERREUR TAILLE":
-        		JOptionPane.showMessageDialog(new JDialog(),"La taille du fichier ne doit pas excéder 500kb.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        		JOptionPane.showMessageDialog(new JDialog(),"La taille du fichier ne doit pas excï¿½der 500kb.", "Erreur", JOptionPane.ERROR_MESSAGE);
         		break;
         	case "ERREUR FICHIER":
         		JOptionPane.showMessageDialog(new JDialog(),"Impossible de charger le fichier " + fc.getSelectedFile().getName() + ".", "Erreur", JOptionPane.ERROR_MESSAGE);
         		break;
         	case "ERREUR ENVOI":
-        		JOptionPane.showMessageDialog(new JDialog(),"L'image n'a pas pu être envoyée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        		JOptionPane.showMessageDialog(new JDialog(),"L'image n'a pas pu ï¿½tre envoyï¿½e.", "Erreur", JOptionPane.ERROR_MESSAGE);
         		break;
         	case "ERREUR SERVEUR":
     			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);

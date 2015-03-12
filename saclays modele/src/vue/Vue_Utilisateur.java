@@ -61,6 +61,7 @@ public class Vue_Utilisateur extends JFrame {
 	//private JPanel panneau;
 	
 	private Modele_Utilisateur modeleUtilisateur;
+	static Color marronclair = new Color(255, 231, 136);
 		
 	public Vue_Utilisateur(Controleur_Utilisateur controleurUtilisateur, Modele_Utilisateur modeleUtilisateur) {
 		this.modeleUtilisateur = modeleUtilisateur;
@@ -321,12 +322,20 @@ public class Vue_Utilisateur extends JFrame {
 		barreRechercher.setEnabled(false);
 		boutonMessage.setEnabled(false);
 		textePublier.setEnabled(false);
+  ///////////////////////////////////////////////////////////////////////		
+ ///////////////////Ajout bouton dÃ©sactiver compte!!////////////////////
+///////////////////////////////////////////////////////////////////////		
 		
-		// met à jour le bouton modifier
+		JButton boutonDesactiver = new JButton ("Desactiver compte");
+			boutonDesactiver.setBackground(marronclair);
+		
+		
+		
+		// met ï¿½ jour le bouton modifier
 		boutonModifier.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_terminer.png")));
 		boutonModifier.setActionCommand(Controleur_Utilisateur.ACTION_TERMINER);
 		
-		// permet l'edition des données du profil
+		// permet l'edition des donnï¿½es du profil
 		photoProfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		photoProfil.setEnabled(true);
 		
@@ -356,10 +365,20 @@ public class Vue_Utilisateur extends JFrame {
 		gbc.anchor = GridBagConstraints.BELOW_BASELINE_TRAILING;
 		gbc.insets = new Insets(-35, 0, 0, 0);
 		this.add(choixSexe, gbc);
+		
+		gbc.gridx = 4;
+		gbc.gridy = 0;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BELOW_BASELINE_TRAILING;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		this.add(boutonDesactiver, gbc);
+		
+		boutonDesactiver.setActionCommand(Controleur_Utilisateur.ACTION_DESACTIVER_COMPTE);
+//		boutonDesactiver.addActionListener(controleurUtilisateur);
 	}
 
 	public void terminer() {
-		// déverouillage de certains controleurs
+		// dï¿½verouillage de certains controleurs
 		boutonAmis.setEnabled(true);
 		boutonAjouter.setEnabled(true);
 		boutonPublier.setEnabled(true);
@@ -369,11 +388,11 @@ public class Vue_Utilisateur extends JFrame {
 		boutonMessage.setEnabled(true);
 		textePublier.setEnabled(true);
 		
-		// met à jour le bouton modifier
+		// met ï¿½ jour le bouton modifier
 		boutonModifier.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_modifier.png")));
 		boutonModifier.setActionCommand(Controleur_Utilisateur.ACTION_MODIFIER_PROFIL);
 		
-		// reverrouille les données du profil
+		// reverrouille les donnï¿½es du profil
 		photoProfil.setCursor(null);
 		photoProfil.setEnabled(false);
 		
@@ -445,7 +464,7 @@ public class Vue_Utilisateur extends JFrame {
 		try {
 			n = Integer.parseInt(age.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(new JDialog(),"'" + age.getText() + "' n'est pas un nombre. 0 prit par défault.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(new JDialog(),"'" + age.getText() + "' n'est pas un nombre. 0 prit par dï¿½fault.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			return 0;
 		}
 		

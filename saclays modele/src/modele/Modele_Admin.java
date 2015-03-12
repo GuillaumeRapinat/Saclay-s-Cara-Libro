@@ -10,7 +10,7 @@ import Client.Client;
 public class Modele_Admin {
 
 	
-	public Vector<Modele_Admin> listerAmis() {
+/*	public Vector<Modele_Admin> listerAmis() {
 		Vector<Modele_Admin> amis = new Vector<Modele_Admin>();
 			
 		if (!Client.estValide()) return amis;

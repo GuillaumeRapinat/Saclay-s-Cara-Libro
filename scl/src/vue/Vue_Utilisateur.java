@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -22,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.xml.soap.Text;
 
 import controleur.Controleur_Mur;
 import controleur.Controleur_Utilisateur;
@@ -30,6 +33,8 @@ import controleur.Controleur_Message;
 public class Vue_Utilisateur extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	protected static int tempmouse = 0;
 	
 	// composants de l'interface graphique
 	JPanel panneauMur;
@@ -149,6 +154,15 @@ public class Vue_Utilisateur extends JFrame {
 			textePublier.setFont(Vue_Mur.f4);
 			textePublier.setBackground(new Color(255,248,192));
 			textePublier.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+
+			textePublier.addMouseListener( new  MouseAdapter(){
+					 public void mousePressed(MouseEvent e) {
+						 if (Vue_Utilisateur.tempmouse == 0){
+							 Vue_Utilisateur.tempmouse = 1;
+						 	textePublier.setText("");
+						 }
+					 }
+			});
 			scrollPaneArea.setPreferredSize(new Dimension(500, 110)); 
 			panneauPublier.add(scrollPaneArea);  
 			
@@ -214,11 +228,16 @@ public class Vue_Utilisateur extends JFrame {
 			boutonActualite.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			boutonActualite.setPreferredSize(new Dimension(50, 45));	
 			
-		JTextField barreRechercher = new JTextField ("Rechercher quelqu'un");
+		final JTextField barreRechercher = new JTextField ("Rechercher quelqu'un");
 			barreRechercher.setFont(f2);
 			barreRechercher.setBackground(new Color(255,248,192));
 			barreRechercher.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			barreRechercher.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			barreRechercher.addMouseListener( new  MouseAdapter(){
+				 public void mousePressed(MouseEvent e) {
+					 	barreRechercher.setText("");
+				 }
+			});
 		JButton boutonRechercher = new JButton("Rechercher");
 		boutonRechercher.setFont(Vue_Mur.f4);
 		boutonRechercher.setBackground(marronclair);

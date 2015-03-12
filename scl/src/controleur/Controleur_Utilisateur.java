@@ -3,6 +3,11 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -12,11 +17,14 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 
+//import Client.Client;
+
 import vue.ImageFileView;
 import vue.ImageFilter;
 import vue.ImagePreview;
 
 import modele.Modele_Utilisateur;
+import modele.Utilisateur;
 import vue.Vue_Accueil;
 import vue.Vue_Admin;
 import vue.Vue_Ami;
@@ -85,6 +93,41 @@ public class Controleur_Utilisateur implements ActionListener {
 			break;
 //juste pour visualiser admin			
 		case ACTION_ADMIN:
+			//arraylist utilisateur
+			//requète BD chercher tous les utilisateurs
+			//parcourir resulset
+			//chaque ligne : créer utilisateur, récup nom, prenom... et ajouter dans arraylist
+			//envoyer l'arraylist à la vue
+/*			Vector<Modele_Utilisateur> resultatUtilisateurs = new Vector<Modele_Utilisateur>();
+			Statement st = null;
+			ResultSet rs = null;
+			try {
+				st = Client.connection.createStatement();
+				rs = st.executeQuery("SELECT id_utilisateur, nom, prenom, age, sexe FROM utilisateurs");
+				
+				while(rs.next()) {
+					Modele_Utilisateur utilisateur = new Modele_Utilisateur();
+					utilisateur.id_utilisateur = rs.getInt("id_utilisateur");
+					utilisateur.nom = rs.getString("nom");
+					utilisateur.prenom = rs.getString("prenom");
+					utilisateur.photo = rs.getBinaryStream("photo");
+					resultatUtilisateurs.add(utilisateur);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return resultatUtilisateurs;
+			} finally {
+				try {
+					if (st != null) st.close();
+					if (rs != null) rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return resultatUtilisateurs;
+*/			
+			
 			coadmin();			//provisoir
 			break;
 		case ACTION_PROFIL_D_UN_AMI:

@@ -11,6 +11,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,6 +31,7 @@ import controleur.Controleur_Message;
 public class Vue_Message extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
+	protected static int tempmouse = 0;
 	
 	Controleur_Message controleurMessage;
 // Composants de l Interface graphique
@@ -170,7 +173,7 @@ public class Vue_Message extends JFrame {
 		JButton boutonSupprimer;
 		JButton boutonRepondre;
 		
-		JTextArea texteMessage;
+		final JTextArea texteMessage;
 		JScrollPane scrollPaneArea; 
 		
 		Controleur_Message controleurMessage = new Controleur_Message();
@@ -300,7 +303,7 @@ public class Vue_Message extends JFrame {
 		JButton boutonAnnuler;
 		JButton boutonEnvoyer;
 		
-		JTextArea texteMessage;
+		final JTextArea texteMessage;
 		JScrollPane scrollPaneArea; 
 		Controleur_Message controleurMessage = new Controleur_Message();
 
@@ -333,6 +336,14 @@ public class Vue_Message extends JFrame {
 			texteMessage.setLineWrap(true);
 			texteMessage.setWrapStyleWord(true);
 			texteMessage.setBackground(Vue_Accueil.beige);
+			texteMessage.addMouseListener( new  MouseAdapter(){
+				 public void mousePressed(MouseEvent e) {
+					 if (Vue_Message.tempmouse == 0){
+						 Vue_Message.tempmouse = 1;
+					 	texteMessage.setText("");
+					 }
+				 }
+			});
 			scrollPaneArea.setPreferredSize(new Dimension(300, 120)); 
 		panneauMessage.add(scrollPaneArea);
 		

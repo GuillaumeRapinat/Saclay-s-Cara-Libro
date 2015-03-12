@@ -14,7 +14,7 @@ public class Client {
 	public static final String IP = "127.0.0.1";
 	public static final int PORT = 3306;
 	public static final String LOGIN_SERVEUR = "root";
-	public static final String MOTDEPASSE_SERVEUR = "admin";
+	public static final String MOTDEPASSE_SERVEUR = "root";
 	
 	public static Connection connection;
 	
@@ -44,7 +44,7 @@ public class Client {
 		new Controleur_Utilisateur();
 		
 		/*try {
-			connection.close();  // seulement pour tester les erreurs liés à la perte de connection au serveur
+			connection.close();  // seulement pour tester les erreurs liï¿½s ï¿½ la perte de connection au serveur
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}*/

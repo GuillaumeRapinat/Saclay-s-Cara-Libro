@@ -1,7 +1,7 @@
 package modele;
 
 public class Utilisateur {
-
+///// modele provisoir, le temps de comprendre comment fonctionne une table
 	private int id;
 	private String prenom;
 	private String nom;
@@ -10,19 +10,19 @@ public class Utilisateur {
 	
 	
 	
-	public int getId(){
+	public static int getId(int id){
 		return id;
 	}
-	public String getPrenom(){
+	public static String getPrenom(String prenom){
 		return prenom;
 	}
-	public String getNom(){
+	public static String getNom(String nom){
 		return nom;
 	}
-	public int getAge(){
+	public static int getAge(int age){
 		return age;
 	}
-	public boolean getSexe(){
+	public static boolean getSexe(boolean sexe){
 		return sexe;
 	}
 	
