@@ -35,7 +35,7 @@ public class Client {
 	public static void main(String[] args) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://" + IP + ":" + PORT + "/caralibro", LOGIN_SERVEUR, MOTDEPASSE_SERVEUR);
+			connection = DriverManager.getConnection("jdbc:mysql://" + IP + ":" + PORT + "/CaraLibro", LOGIN_SERVEUR, MOTDEPASSE_SERVEUR);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(new JDialog(),"Impossible de se connecter au serveur !", "Erreur", JOptionPane.ERROR_MESSAGE);
