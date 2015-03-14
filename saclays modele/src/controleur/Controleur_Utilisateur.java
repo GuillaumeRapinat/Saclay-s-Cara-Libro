@@ -11,11 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
+import modele.Modele_Message;
 import modele.Modele_Utilisateur;
 import vue.ImagePreview;
 import vue.Vue_Accueil;
 import vue.Vue_Admin;
 import vue.Vue_Liste_Amis;
+import vue.Vue_Message;
 import vue.Vue_Recherche;
 import vue.Vue_Utilisateur;
 
@@ -32,7 +35,9 @@ public class Controleur_Utilisateur implements ActionListener {
 	public static final String ACTION_CHANGER_PHOTO_PROFIL = "CHANGER PHOTO PROFIL";
 	public static final String ACTION_LISTER_AMIS = "LISTE D'AMIS";
 	public static final String ACTION_DESACTIVER_COMPTE = "DESACTIVER COMPTE";
-
+	public static final String ACTION_LISTER_MESSAGES = "LISTE DE MESSAGES";
+	
+	
 	private Modele_Utilisateur modeleUtilisateur;
 	private JFrame vue;
 	
@@ -64,6 +69,9 @@ public class Controleur_Utilisateur implements ActionListener {
 		case ACTION_TERMINER:
 			miseAJour();
 			break;
+		case ACTION_LISTER_MESSAGES:
+			listeMessages();
+			break;
 		case ACTION_RECHERCHER:
 			String recherche = ((Vue_Utilisateur) vue).getRecherche();  // on recup�re la recherche
 			Vector<Modele_Utilisateur> resultatRecherche = Modele_Utilisateur.rechercher(recherche);  // on ex�cute la recherche
@@ -81,6 +89,12 @@ public class Controleur_Utilisateur implements ActionListener {
 		}
 	}
 
+	private void listeMessages() {
+		Vector<Modele_Message> resultatMessages = chercherMessages(Modele_Utilisateur.getMonId());
+		new Vue_Message(new Controleur_Message(), resultatMessages);
+		
+	}	
+	
 	private void desactiverCompte() {
 		Object[] options2 = {"Oui! Bye bye Saclay's Cara Libro!", "Non non, je reste!"};
 		int n2 = JOptionPane.showOptionDialog(new JDialog(), "Êtes-vous vraiment sûr(e) de vouloir nous quitter??", "Désactiver son compte",

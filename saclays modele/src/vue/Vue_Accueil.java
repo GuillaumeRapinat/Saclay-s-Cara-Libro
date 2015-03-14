@@ -29,6 +29,7 @@ public class Vue_Accueil extends JFrame {
 	
 	// couleurs
 	public static final Color MARRON = new Color(207,168,80);
+	static Color beige = new Color(255,248,192);
 	
 	// polices
 	public static final Font FONT = new Font("Helvetica", Font.BOLD+Font.ITALIC, 26);

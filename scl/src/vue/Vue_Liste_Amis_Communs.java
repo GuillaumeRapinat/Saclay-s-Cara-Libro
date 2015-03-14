@@ -1,7 +1,5 @@
 package vue;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,9 +18,9 @@ import javax.swing.JScrollPane;
 
 import controleur.Controleur_Utilisateur;
 
-public class Vue_Recherche_Nouvel_Ami extends JFrame {
+public class Vue_Liste_Amis_Communs extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	JLabel photoProfil;
 	JLabel labelPrenom;
@@ -37,7 +35,7 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 	
 //	public static final int CUSTOM_CURSOR = cursor: url("images/cursor.png"), pointer;;
 	
-	public Vue_Recherche_Nouvel_Ami(Controleur_Utilisateur controleurUtilisateur){
+	public Vue_Liste_Amis_Communs(Controleur_Utilisateur controleurUtilisateur){
 		
 		this.controleurUtilisateur = controleurUtilisateur;
 		
@@ -58,10 +56,7 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 		this.add(jsp);	//le panel est déjà dans un scrollbar, il ne reste que mettre le scrollbar dans la fenêtre!!
 		
 		
-	
-		
-		
-		this.setTitle("Recherche de << " + recherche + " >>");
+		this.setTitle("Amis en commun");
 		this.pack();
 		this.setLocation(800, 200);
 		//this.setSize(300, 400);
@@ -84,7 +79,7 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 			labelPrenom.setFont(f2);
 		labelNom = new JLabel(nom);
 			labelNom.setFont(f2);
-			
+		
 		boutonAmiCommun = new JButton("Amis en commun");
 			boutonAmiCommun.setFont(Vue_Mur.f4);
 			boutonAmiCommun.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -115,37 +110,38 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 			dejaAmi = new JLabel ("Ami(e)");
 				dejaAmi.setPreferredSize(new Dimension (60, 10));
 				dejaAmi.setFont(Vue_Mur.f4);
-			gbc.gridx = 3;
-			gbc.gridy = 0;
-			gbc.gridheight = gbc.gridwidth = 1;
-			gbc.anchor = GridBagConstraints.BELOW_BASELINE;
-			gbc.insets = new Insets(0, 50, 0, 0);
-			bouton.add(dejaAmi, gbc);	
-			
-			bouton.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_D_UN_AMI);
-			bouton.addActionListener(controleurUtilisateur);
-			
-		}
-		else {
-			demanderAmi = new JButton("+ ami(e)");
-			demanderAmi.setFont(Vue_Mur.f4);
-			demanderAmi.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			
-			demanderAmi.setActionCommand(Controleur_Utilisateur.ACTION_DEMANDER_AMI);
-			demanderAmi.addActionListener(controleurUtilisateur);
-			
-			bouton.setActionCommand(Controleur_Utilisateur.ACTION_PAS_POUVOIR_VOIR_PROFIL);
-			bouton.addActionListener(controleurUtilisateur);
-			
-			gbc.gridx = 3;
-			gbc.gridy = 0;
-			gbc.gridheight = gbc.gridwidth = 2;
-			gbc.anchor = GridBagConstraints.ABOVE_BASELINE;
-			gbc.insets = new Insets(-30, 0, 0, 0);
-			demanderAmi.setBackground(Vue_Utilisateur.marron);
-			bouton.add(demanderAmi, gbc);	
-		}
+				gbc.gridx = 3;
+				gbc.gridy = 0;
+				gbc.gridheight = gbc.gridwidth = 1;
+				gbc.anchor = GridBagConstraints.BELOW_BASELINE;
+				gbc.insets = new Insets(0, 50, 0, 0);
+				bouton.add(dejaAmi, gbc);	
+				
+				bouton.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_D_UN_AMI);
+				bouton.addActionListener(controleurUtilisateur);
+				
+			}
+			else {
+				demanderAmi = new JButton("+ ami(e)");
+				demanderAmi.setFont(Vue_Mur.f4);
+				demanderAmi.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				
+				demanderAmi.setActionCommand(Controleur_Utilisateur.ACTION_DEMANDER_AMI);
+				demanderAmi.addActionListener(controleurUtilisateur);
+				
+				bouton.setActionCommand(Controleur_Utilisateur.ACTION_PAS_POUVOIR_VOIR_PROFIL);
+				bouton.addActionListener(controleurUtilisateur);
+				
+				gbc.gridx = 3;
+				gbc.gridy = 0;
+				gbc.gridheight = gbc.gridwidth = 2;
+				gbc.anchor = GridBagConstraints.ABOVE_BASELINE;
+				gbc.insets = new Insets(-30, 0, 0, 0);
+				demanderAmi.setBackground(Vue_Utilisateur.marron);
+				bouton.add(demanderAmi, gbc);	
+			}
 		
+
 		gbc.gridx = 3;
 		gbc.gridy = 1;
 		gbc.gridheight = gbc.gridwidth = 2;
@@ -157,10 +153,10 @@ public class Vue_Recherche_Nouvel_Ami extends JFrame {
 		boutonAmiCommun.setActionCommand(Controleur_Utilisateur.ACTION_AMI_COMMUN);
 		boutonAmiCommun.addActionListener(controleurUtilisateur);
 		
+		
+		
 		bouton.setBackground(Vue_Utilisateur.marronclair);
 		return bouton;
 		
 	}
-	
-
 }

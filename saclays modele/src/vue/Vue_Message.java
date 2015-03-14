@@ -25,11 +25,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import modele.Modele_Message;
 import modele.Modele_Utilisateur;
 
 
 import controleur.Controleur_Message;
-import controleur.Modele_Message;
+
 
 
 public class Vue_Message extends JFrame {
@@ -53,7 +54,7 @@ public class Vue_Message extends JFrame {
 	JTextArea texteMessage;
 	JScrollPane scrollPaneArea; 
 	GridBagConstraints gbc = new GridBagConstraints();
-	
+
 	static Color marron = new Color(207,168,80);
 	static Font f6 = new Font ("Helvetica",Font.ITALIC, 12);
 	static Font f7 = new Font ("Helvetica",Font.BOLD, 12);
@@ -64,8 +65,8 @@ public class Vue_Message extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-
-		for(Modele_Message message : resultatMessage) {
+		
+		for(Modele_Message message : resultatMessages) {
 		
 		panel.add(titreMessageRecu(message));
 		panel.add(titreMessageRecu(message));

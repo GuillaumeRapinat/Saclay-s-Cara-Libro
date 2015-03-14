@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -27,11 +28,15 @@ public class Vue_Liste_Amis extends JFrame {
 	JLabel photoProfil;
 	JLabel labelPrenom;
 	JLabel labelNom;
-	
+	JButton boutonAmiCommun;
 	
 	static Font f2 = new Font("Helvetica", Font.BOLD+Font.ITALIC, 16);
 	
-	public Vue_Liste_Amis(){
+	Controleur_Utilisateur controleurUtilisateur;
+	
+	public Vue_Liste_Amis(Controleur_Utilisateur controleurUtilisateur){
+		
+		this.controleurUtilisateur = controleurUtilisateur;
 		
 		JPanel panel = new JPanel();
 		
@@ -56,7 +61,7 @@ public class Vue_Liste_Amis extends JFrame {
 		this.setTitle("Liste d'amis");
 		this.pack();
 		this.setLocation(800, 200);
-		this.setSize(200, 400);
+		this.setSize(400, 400);
 		
 		
 	}
@@ -74,7 +79,9 @@ public class Vue_Liste_Amis extends JFrame {
 			labelPrenom.setFont(f2);
 		labelNom = new JLabel(nom);
 			labelNom.setFont(f2);
-			
+		boutonAmiCommun = new JButton("Amis en commun");
+			boutonAmiCommun.setFont(Vue_Mur.f4);
+			boutonAmiCommun.setCursor(new Cursor(Cursor.HAND_CURSOR));	
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -98,6 +105,17 @@ public class Vue_Liste_Amis extends JFrame {
 		gbc.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		bouton.add(labelNom, gbc);	
+		
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		gbc.gridheight = gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.BASELINE;
+		gbc.insets = new Insets(20, 10, 0, 0);
+		boutonAmiCommun.setBackground(Vue_Utilisateur.marron);
+		bouton.add(boutonAmiCommun, gbc);
+		
+		boutonAmiCommun.setActionCommand(Controleur_Utilisateur.ACTION_AMI_COMMUN);
+		boutonAmiCommun.addActionListener(controleurUtilisateur);
 		
 		bouton.setBackground(Vue_Utilisateur.marronclair);
 		return bouton;

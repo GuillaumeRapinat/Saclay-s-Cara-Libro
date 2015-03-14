@@ -23,6 +23,7 @@ import vue.ImageFileView;
 import vue.ImageFilter;
 import vue.ImagePreview;
 
+import modele.Modele_Message;
 import modele.Modele_Utilisateur;
 import modele.Utilisateur;
 import vue.Vue_Accueil;
@@ -30,6 +31,7 @@ import vue.Vue_Admin;
 import vue.Vue_Ami;
 import vue.Vue_Charger_Image;
 import vue.Vue_Liste_Amis;
+import vue.Vue_Liste_Amis_Communs;
 import vue.Vue_Liste_Jaime;
 import vue.Vue_Message;
 import vue.Vue_Mur;
@@ -59,13 +61,11 @@ public class Controleur_Utilisateur implements ActionListener {
 	public static final String ACTION_PROFIL_PERSONNEL = "VOIR SON PROFIL";
 	public static final String ACTION_SUPPRIMER_AMI = "SUPPRIMER DE LA LISTE D'AMIS";
 	public static final String ACTION_ENVOYER_MESSAGE = "ENVOYER_MESSAGE";
+	public static final String ACTION_AMI_COMMUN = "AMIS EN COMMUN";
 	
 	////////////////ADMIN////////////////
 //	public static final String ACTION_LISTE_SIGNALEMENTS = "LISTE DES SIGNALEMENTS";
 
-	
-
-	
 	Controleur_Mur controleurMur;
 	private Modele_Utilisateur modeleUtilisateur;
 	private JFrame vue;
@@ -75,6 +75,7 @@ public class Controleur_Utilisateur implements ActionListener {
 	private JFrame vueAmi;
 	private JFrame vueM;
 	private JFrame vueS;
+	private JFrame vueAC;
 	private JFileChooser fc;
 //////////////////////////////	
 	public Controleur_Utilisateur() {
@@ -93,41 +94,6 @@ public class Controleur_Utilisateur implements ActionListener {
 			break;
 //juste pour visualiser admin			
 		case ACTION_ADMIN:
-			//arraylist utilisateur
-			//requète BD chercher tous les utilisateurs
-			//parcourir resulset
-			//chaque ligne : créer utilisateur, récup nom, prenom... et ajouter dans arraylist
-			//envoyer l'arraylist à la vue
-/*			Vector<Modele_Utilisateur> resultatUtilisateurs = new Vector<Modele_Utilisateur>();
-			Statement st = null;
-			ResultSet rs = null;
-			try {
-				st = Client.connection.createStatement();
-				rs = st.executeQuery("SELECT id_utilisateur, nom, prenom, age, sexe FROM utilisateurs");
-				
-				while(rs.next()) {
-					Modele_Utilisateur utilisateur = new Modele_Utilisateur();
-					utilisateur.id_utilisateur = rs.getInt("id_utilisateur");
-					utilisateur.nom = rs.getString("nom");
-					utilisateur.prenom = rs.getString("prenom");
-					utilisateur.photo = rs.getBinaryStream("photo");
-					resultatUtilisateurs.add(utilisateur);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return resultatUtilisateurs;
-			} finally {
-				try {
-					if (st != null) st.close();
-					if (rs != null) rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			return resultatUtilisateurs;
-*/			
-			
 			coadmin();			//provisoir
 			break;
 		case ACTION_PROFIL_D_UN_AMI:
@@ -197,6 +163,9 @@ public class Controleur_Utilisateur implements ActionListener {
 				JOptionPane.showMessageDialog(dialogue, "                            Votre demande a bien été prise en compte.\nNous vous conseillons d'attendre au moins un mois avant de refaire la demande.", "Demande ajoutée!", JOptionPane.NO_OPTION, new ImageIcon(getClass().getClassLoader().getResource("images/notifications.png")));
 			}
 			break;
+		case ACTION_AMI_COMMUN:
+			amiEnCommun();
+			break;
 //////////////////////////
 		case ACTION_CREER_COMPTE:
 			creerCompte();
@@ -215,14 +184,32 @@ public class Controleur_Utilisateur implements ActionListener {
 		}
 	}
 
+	private void amiEnCommun() {
+		if (vue2 != null){
+			vue2.setVisible(false);
+			vue2.dispose();
+		}
+		if (vue5 != null){
+			vue5.setVisible(false);
+			vue5.dispose();
+		}
+		if (vueAC != null){
+			vueAC.setVisible(false);
+			vueAC.dispose();
+		}
+		vueAC = new Vue_Liste_Amis_Communs(this);
+		vueAC.setVisible(true);
+	}
+
 	private void listeAmis() {
-		vue2 = new Vue_Liste_Amis();
+		vue2 = new Vue_Liste_Amis(this);
 		vue2.setVisible(true);
 	}
 	
 	private void listeMessages() {
-		vueM = new Vue_Message(new Controleur_Message());
-		vueM.setVisible(true);
+		Vector<Modele_Message> resultatMessages = chercherMessages(Modele_Utilisateur.getMonId());
+		new Vue_Message(new Controleur_Message(), resultatMessages);
+		
 	}
 	
 	private void ajouterImage() {

@@ -400,6 +400,7 @@ public class Modele_Utilisateur {
 	/////////////////////////////////////////////////////////////////////////////
 	// GETTERS
 
+
 	public String getPrenom() {
 		return prenom;
 	}

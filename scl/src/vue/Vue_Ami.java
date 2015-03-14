@@ -55,6 +55,7 @@ public class Vue_Ami extends JFrame {
 	public static JFileChooser fc;
 	Controleur_Mur controleurMur;
 	Controleur_Utilisateur controleurUtilisateur;
+	public static int utilisateur;
 	
 	public static Color marron = new Color(207,168,80);
 	static Color marronclair = new Color(255, 231, 136);
@@ -63,7 +64,7 @@ public class Vue_Ami extends JFrame {
 	GridBagConstraints gbc = new GridBagConstraints();
 	
 	public Vue_Ami(Controleur_Utilisateur controleurUtilisateur, int id_utilisateur) {
-		
+		super();
 		this.controleurUtilisateur = controleurUtilisateur;
 		
 		this.setLayout(new GridBagLayout());
@@ -189,13 +190,7 @@ public class Vue_Ami extends JFrame {
 			boutonAmis.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			boutonAmis.setPreferredSize(new Dimension(85, 64));
 		panneauAmis.add(boutonAmis);
-		boutonProfil = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/profil_tout_petit.png")));
-			boutonProfil.setBackground(new Color(0, 0, 0));
-			boutonProfil.setOpaque(false);
-			boutonProfil.setBorderPainted(false);
-			boutonProfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			boutonProfil.setPreferredSize(new Dimension(50, 45));
-			
+
 		boutonActualite = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/logo_SCL_tout_petit.png")));
 			boutonActualite.setBackground(new Color(0, 0, 0));
 			boutonActualite.setOpaque(false);
@@ -302,13 +297,35 @@ public class Vue_Ami extends JFrame {
 		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		this.add(panneauAmis, gbc);
-		
-		gbc.gridx = 10;
-		gbc.gridy = 1;
-		gbc.gridheight = gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
-		gbc.insets = new Insets(0, 0, 0, 0);
-		this.add(boutonProfil, gbc);
+		if (utilisateur == 1) {
+			boutonProfil = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/profil_tout_petit.png")));
+			boutonProfil.setBackground(new Color(0, 0, 0));
+			boutonProfil.setOpaque(false);
+			boutonProfil.setBorderPainted(false);
+			boutonProfil.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			boutonProfil.setPreferredSize(new Dimension(50, 45));
+			
+			gbc.gridx = 10;
+			gbc.gridy = 1;
+			gbc.gridheight = gbc.gridwidth = 1;
+			gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+			gbc.insets = new Insets(0, 0, 0, 0);
+			this.add(boutonProfil, gbc);
+			boutonProfil.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_PERSONNEL);
+			boutonProfil.addActionListener(controleurUtilisateur);
+
+		}
+		else {
+			JButton boutonAdmin = new JButton ("Admin");
+			gbc.gridx = 10;
+			gbc.gridy = 1;
+			gbc.gridheight = gbc.gridwidth = 1;
+			gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+			gbc.insets = new Insets(0, 0, 0, 0);
+			this.add(boutonAdmin, gbc);
+			boutonProfil.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_PERSONNEL);
+			boutonProfil.addActionListener(controleurUtilisateur);
+		}
 
 		gbc.gridx = 10;
 		gbc.gridy = 2;
@@ -356,8 +373,6 @@ public class Vue_Ami extends JFrame {
 		boutonMessage.addActionListener(controleurUtilisateur);
 		boutonRechercher.setActionCommand(Controleur_Utilisateur.ACTION_RECHERCHER_AMIS);
 		boutonRechercher.addActionListener(controleurUtilisateur);
-		boutonProfil.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_PERSONNEL);
-		boutonProfil.addActionListener(controleurUtilisateur);
 		boutonActualite.setActionCommand(Controleur_Utilisateur.ACTION_PROFIL_PERSONNEL);
 		boutonActualite.addActionListener(controleurUtilisateur);
 		

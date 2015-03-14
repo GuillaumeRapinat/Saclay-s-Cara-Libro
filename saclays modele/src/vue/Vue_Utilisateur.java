@@ -61,8 +61,9 @@ public class Vue_Utilisateur extends JFrame {
 	//private JPanel panneau;
 	
 	private Modele_Utilisateur modeleUtilisateur;
+	public static Color marron = new Color(207,168,80);
 	static Color marronclair = new Color(255, 231, 136);
-		
+			
 	public Vue_Utilisateur(Controleur_Utilisateur controleurUtilisateur, Modele_Utilisateur modeleUtilisateur) {
 		this.modeleUtilisateur = modeleUtilisateur;
 		
