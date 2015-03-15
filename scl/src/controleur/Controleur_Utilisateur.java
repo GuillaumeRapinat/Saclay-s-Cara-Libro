@@ -39,7 +39,7 @@ import vue.Vue_Recherche_Nouvel_Ami;
 import vue.Vue_Utilisateur;
 
 public class Controleur_Utilisateur implements ActionListener {
-
+	//ACTION_RECHERCHER_AMIS
 	// constantes pour les actionCommand
 	public static final String ACTION_CONNECTION = "CONNECTION";
 	public static final String ACTION_CREER_COMPTE = "CREER COMPTE";

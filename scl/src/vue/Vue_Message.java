@@ -91,7 +91,7 @@ public class Vue_Message extends JFrame {
 		
 	public JButton titreMessageRecu(Modele_Message message){
 		
-			JButton bouton = new JButton();
+			IdButton bouton = new IdButton(message.getIdM());
 			
 			bouton.setLayout(new GridBagLayout());
 			

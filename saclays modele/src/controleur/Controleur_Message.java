@@ -2,10 +2,14 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+
+import modele.Modele_Message;
+import modele.Modele_Utilisateur;
 
 import vue.Vue_Message;
 
@@ -42,6 +46,11 @@ public class Controleur_Message implements ActionListener {
 		}
 	}
 
+	private void lireMessage() {
+		Modele_Message contenuMessage = recupMessage(Modele_Message.getMonIdM());
+		Vue_Message.message(contenuMessage);
+		
+	}	
 	private void annuler() {
 		// TODO Auto-generated method stub
 		

@@ -36,6 +36,7 @@ public class Controleur_Utilisateur implements ActionListener {
 	public static final String ACTION_LISTER_AMIS = "LISTE D'AMIS";
 	public static final String ACTION_DESACTIVER_COMPTE = "DESACTIVER COMPTE";
 	public static final String ACTION_LISTER_MESSAGES = "LISTE DE MESSAGES";
+	private static final String ACTION_ENVOYER_MESSAGE = "ENVOYER UN MESSAGE";
 	
 	
 	private Modele_Utilisateur modeleUtilisateur;
@@ -59,6 +60,10 @@ public class Controleur_Utilisateur implements ActionListener {
 			break;
 		case ACTION_DECONNEXION:
 			deconnexion();
+			break;
+		case ACTION_ENVOYER_MESSAGE:
+			envoyerMessage();
+			JOptionPane.showMessageDialog(new JDialog(),"        Votre message est envoyé.", "Message", JOptionPane.DEFAULT_OPTION);
 			break;
 		case ACTION_REACTIVER_COMPTE:
 			reactiverCompte();
@@ -89,8 +94,21 @@ public class Controleur_Utilisateur implements ActionListener {
 		}
 	}
 
+	private void envoyerMessage() {
+		int id_utilisateur_e = utilisateur.getMonId();  // on recupere l'id de l'utilisateur que l'on souhaite ajouter
+		
+		switch(Modele_Utilisateur.envoyerMessage(id_utilisateur_e)) {
+		
+		case "ERREUR SERVEUR":
+			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			deconnexion();
+			break;
+		}
+		
+	}
+
 	private void listeMessages() {
-		Vector<Modele_Message> resultatMessages = chercherMessages(Modele_Utilisateur.getMonId());
+		Vector<Modele_Message> resultatMessages = chercherMessages(Modele_Accueil.getMonId());
 		new Vue_Message(new Controleur_Message(), resultatMessages);
 		
 	}	

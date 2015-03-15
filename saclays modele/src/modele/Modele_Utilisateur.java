@@ -287,70 +287,7 @@ public class Modele_Utilisateur {
 		return amis;
 	}
 
-	public Vector<Modele_Utilisateur> listerUtilisateurs() {
-		Vector<Modele_Utilisateur> resultatUtilisateurs = new Vector<Modele_Utilisateur>();
-		Statement st = null;
-		ResultSet rs = null;
-		try {
-			st = Client.connection.createStatement();
-			rs = st.executeQuery("SELECT id_utilisateur, nom, prenom, age, sexe FROM utilisateurs");
-			
-			while(rs.next()) {
-				Modele_Utilisateur utilisateur = new Modele_Utilisateur();
-				utilisateur.id_utilisateur = rs.getInt("id_utilisateur");
-				utilisateur.prenom = rs.getString("prenom");
-				utilisateur.nom = rs.getString("nom");
-				utilisateur.age = rs.getInt("age");
-				utilisateur.sexe = rs.getString("sexe");
-				resultatUtilisateurs.add(utilisateur);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return resultatUtilisateurs;
-		} finally {
-			try {
-				if (st != null) st.close();
-				if (rs != null) rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return resultatUtilisateurs;
-	}
 
-	public Vector<Modele_Utilisateur> listerSignalements() {
-		
-		Vector<Modele_Utilisateur> resultatSignalements = new Vector<Modele_Utilisateur>();
-		Statement st = null;
-		ResultSet rs = null;
-		try {
-			st = Client.connection.createStatement();
-			rs = st.executeQuery("SELECT utilisateurs.id_utilisateur, nom, prenom, date FROM utilisateurs, signalements WHERE utilisateurs.id_utilisateur = signalements.id_utilisateur");
-			
-			while(rs.next()) {
-				Modele_Utilisateur utilisateur = new Modele_Utilisateur();
-				utilisateur.id_utilisateur = rs.getInt("id_utilisateur");
-				utilisateur.prenom = rs.getString("prenom");
-				utilisateur.nom = rs.getString("nom");
-				utilisateur.date = rs.getString("date");
-				resultatSignalements.add(utilisateur);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return resultatSignalements;
-		} finally {
-			try {
-				if (st != null) st.close();
-				if (rs != null) rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return resultatSignalements;
-	}
-	
 	public String changerPhoto(String fichier) {
 		// v�rifie la taille du fichier
     	long taille = (new File(fichier)).length();

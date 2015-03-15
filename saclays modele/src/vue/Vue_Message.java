@@ -92,7 +92,7 @@ public class Vue_Message extends JFrame {
 		
 	public JButton titreMessageRecu(Modele_Message message){
 		
-			JButton bouton = new JButton();
+			IdButton bouton = new IdButton(message.getIdM());
 			
 			bouton.setLayout(new GridBagLayout());
 			
@@ -169,7 +169,7 @@ public class Vue_Message extends JFrame {
 		
 		}	
 		
-	public static void message(String prenom, String nom, String titre, String texte, String date, String heure) {
+	public static void message(Modele_Message contenuMessage) {
 		
 		JLabel labelNom;
 		JLabel labelPrenom;
@@ -190,17 +190,17 @@ public class Vue_Message extends JFrame {
 		frame.setLayout(new GridBagLayout());
 		
 		
-		labelNom = new JLabel (nom);
+		labelNom = new JLabel (contenuMessage.getNom());
 			labelNom.setFont(f7);
-		labelPrenom = new JLabel (prenom);
+		labelPrenom = new JLabel (contenuMessage.getPrenom());
 			labelPrenom.setFont(f7);
 			
-		labelTitre = new JLabel(titre);
+		labelTitre = new JLabel(contenuMessage.getObjet());
 			labelTitre.setFont(f6);
 			
-		labelDate = new JLabel(date);
+		labelDate = new JLabel("Date");
 			labelDate.setFont(f7);
-		labelHeure = new JLabel(heure);
+		labelHeure = new JLabel("heure");
 			labelHeure.setFont(f7);
 			
 		boutonSupprimer = new JButton ("Supprimer");
@@ -212,7 +212,7 @@ public class Vue_Message extends JFrame {
 			//Messages
 		JPanel panneauMessage = new JPanel();
 	    panneauMessage.setLayout(new FlowLayout());
-	    texteMessage = new JTextArea(texte);
+	    texteMessage = new JTextArea(contenuMessage.getTexte());
 		    scrollPaneArea = new JScrollPane(texteMessage,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		    texteMessage.setCaretPosition(0); //set scrollPane to the top  
 			texteMessage.setFont(new Font("Helvetica", Font.BOLD + Font.ITALIC, 12));
@@ -418,6 +418,9 @@ public class Vue_Message extends JFrame {
 		frame.setVisible(true);
 		
 	}
+
+
+	
 	
 	
 }
