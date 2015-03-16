@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -22,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import modele.Modele_Message;
+import modele.Modele_Utilisateur;
 
 
 
@@ -60,12 +62,21 @@ public class Vue_Message extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-
-		for(Modele_Message message : resultatMessages) {
+/*		
+		if (resultatMessage == null){
+			JPanel panneau = new JPanel();
+			panneau.setLayout(new GridLayout());
+			JLabel rien = new JLabel("Vous n'avez aucun message à lire...\nOn dirait que personne ne pense à vous!");
+			rien.setFont(f6);
+			panneau.add(rien);
+			this.add(panneau);
+		}*/
 		
+		for(Modele_Message message : resultatMessages) {
+			
 			panel.add(titreMessageRecu(message));
-						
+			
+					
 		}
 		JScrollPane jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(jsp);	//le panel est déjà dans un scrollbar, il ne reste que mettre le scrollbar dans la fenêtre!!
@@ -77,6 +88,7 @@ public class Vue_Message extends JFrame {
 		this.getContentPane().setBackground(Vue_Accueil.MARRON);
 		this.pack();
 		this.setPreferredSize(new Dimension (500, 600));
+		this.setMinimumSize(new Dimension(80, 20));
 		this.setLocation(550, 180);
 		this.setVisible(true);
 
@@ -87,6 +99,7 @@ public class Vue_Message extends JFrame {
 	public IdButton titreMessageRecu(Modele_Message message){
 		
 			IdButton bouton = new IdButton(message.getIdM());
+			
 			
 			bouton.setLayout(new GridBagLayout());
 			
@@ -163,7 +176,7 @@ public class Vue_Message extends JFrame {
 		
 		}	
 		
-	public void message(Modele_Message contenuMessage) {
+	public void message(Vector<Modele_Message> contenuMessage) {
 		
 		JLabel labelNom;
 		JLabel labelPrenom;
@@ -174,7 +187,7 @@ public class Vue_Message extends JFrame {
 		JButton boutonSupprimer;
 		JButton boutonRepondre;
 		
-		final JTextArea texteMessage;
+		JTextArea texteMessage;
 		JScrollPane scrollPaneArea; 
 		
 		Controleur_Message controleurMessage = new Controleur_Message();
@@ -183,19 +196,21 @@ public class Vue_Message extends JFrame {
 		JFrame frame = new JFrame();
 		frame.setLayout(new GridBagLayout());
 		
-		
-		labelNom = new JLabel (contenuMessage.getNom());
+		for(Modele_Message message : contenuMessage){
+		labelNom = new JLabel (message.getNom());
 			labelNom.setFont(f7);
-		labelPrenom = new JLabel (contenuMessage.getPrenom());
+		labelPrenom = new JLabel (message.getPrenom());
 			labelPrenom.setFont(f7);
 			
-		labelTitre = new JLabel(contenuMessage.getObjet());
+		labelTitre = new JLabel(message.getObjet());
 			labelTitre.setFont(f6);
 			
 		labelDate = new JLabel("Date");
 			labelDate.setFont(f7);
 		labelHeure = new JLabel("heure");
 			labelHeure.setFont(f7);
+			
+		
 		boutonSupprimer = new JButton ("Supprimer");
 			boutonSupprimer.setBackground(Vue_Utilisateur.MARRONCLAIR);
 		boutonRepondre = new JButton ("Repondre");
@@ -205,7 +220,7 @@ public class Vue_Message extends JFrame {
 			//Messages
 		JPanel panneauMessage = new JPanel();
 	    panneauMessage.setLayout(new FlowLayout());
-	    texteMessage = new JTextArea(contenuMessage.getTexte());
+	    texteMessage = new JTextArea(message.getTexte());
 		    scrollPaneArea = new JScrollPane(texteMessage,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		    texteMessage.setCaretPosition(0); //set scrollPane to the top  
 			texteMessage.setFont(new Font("Helvetica", Font.BOLD + Font.ITALIC, 12));
@@ -285,7 +300,8 @@ public class Vue_Message extends JFrame {
 		boutonRepondre.addActionListener(controleurMessage);
 		boutonSupprimer.setActionCommand(Controleur_Message.ACTION_SUPPRIMER);
 		boutonSupprimer.addActionListener(controleurMessage);
-	
+		}
+		
 		//frame.setBackground(Vue_Utilisateur.marronclair);
 		
 		frame.setTitle("Boite de messagerie");

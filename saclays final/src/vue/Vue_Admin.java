@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,16 +17,23 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+
+import modele.ButtonEditor;
+import modele.ButtonRenderer;
 import modele.Modele_Admin;
 
 
+
+import controleur.Controleur_Mur;
 import controleur.Controleur_Utilisateur;
 
 public class Vue_Admin extends JFrame{
@@ -77,20 +85,20 @@ public class Vue_Admin extends JFrame{
 		
 		labelUtilisateurs = new JLabel("Liste des utilisateurs");
 			labelUtilisateurs.setFont(f1);
-				
-		
-	    //Les titres des colonnes
-		
-	    Vector <String> title = new Vector();
+		 Vector <String> title = new Vector<String>();
 		    title.add("iD");
 		    title.add("Prénom");
 		    title.add("Nom");
 		    title.add("Age");
 		    title.add("Sexe");
-			   
+		    title.add("Bloque");		
+		    
+		
+		   
 		JTable table = new JTable(lutilisateur, title);
-		table.setAutoCreateRowSorter(true);
-		//table.
+			table.setAutoCreateRowSorter(true);
+			table.getColumn("Bloque").setCellRenderer(new ButtonRenderer());
+			table.getColumn("Bloque").setCellEditor(new ButtonEditor(new JCheckBox(), new Modele_Admin(), controleurUtilisateur, table));
 		JScrollPane scrollpan = new JScrollPane(table);
 		scrollpan.setPreferredSize(new Dimension(400, 100));
 		this.add(scrollpan);
@@ -297,6 +305,155 @@ public class Vue_Admin extends JFrame{
 		bouton.setSize(300, 400);
 		return bouton;
 		
+	}
+
+	public static void vuePublication(Modele_Admin publication){
+		
+		
+		JButton boutonDeconnection;
+		JButton boutonSignalement;
+		
+		JLabel labelIdUtilisateur;
+		JLabel labelPrenom;
+		JLabel labelNom;
+		JLabel labelDate;
+		JLabel labelTitreSignalement;
+		JLabel labelUtilisateurs;
+		JLabel labelNbrCompte;
+		JLabel labelPhotoProfil;
+		JLabel labelHeure;
+		JButton labelnbrCom;
+		
+		
+		
+		JFrame frame = new JFrame();
+		
+		
+	
+		frame.setBackground(Vue_Utilisateur.MARRONCLAIR);
+		frame.setLayout(new GridBagLayout());
+
+		labelPhotoProfil = new JLabel (new IconResized(publication.getPhotopro(), 170, 170));
+		//getClass().getClassLoader().getResource("images/profil_petit.png")
+
+		labelPrenom = new JLabel(publication.getPrenom());
+			labelPrenom.setFont(f2);
+		labelNom = new JLabel(publication.getNom());
+			labelNom.setFont(f2);
+		labelDate = new JLabel("date");
+			labelDate.setFont(f4);
+			labelDate.setForeground(Color.GRAY);
+		labelHeure = new JLabel("Heure");
+			labelHeure.setFont(f4);
+			labelHeure.setForeground(Color.GRAY);
+		labelnbrCom = new JButton(nb + " commentaire(s)");
+			labelnbrCom.setFont(f3);
+			labelnbrCom.setBackground(new Color(0, 0, 0));
+			labelnbrCom.setOpaque(false);
+			labelnbrCom.setBorderPainted(false);
+			labelnbrCom.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			
+		JPanel panneauPublier = new JPanel();
+		panneauPublier.setBackground(Vue_Utilisateur.marron);
+		panneauPublier.setLayout(new FlowLayout());
+		textePublier = new JTextArea(texte);
+			JScrollPane scrollPaneArea = new JScrollPane(textePublier,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			textePublier.setCaretPosition(0); // set scrollPane to the top
+			textePublier.setLineWrap(true);
+			textePublier.setWrapStyleWord(true);
+			textePublier.setEditable(false);
+			textePublier.setFont(f4);
+			textePublier.setBackground(new Color(255,248,192));
+			scrollPaneArea.setPreferredSize(new Dimension(500, 60));
+		panneauPublier.add(scrollPaneArea);
+
+		JButton boutonSignaler = new JButton("Signaler");
+			boutonSignaler.setBackground(Vue_Utilisateur.marron);
+			boutonSignaler.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		boutonAimer = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_jaime.png")));
+			boutonAimer.setBackground(new Color(0, 0, 0));
+			boutonAimer.setOpaque(false);
+			boutonAimer.setBorderPainted(false);
+			boutonAimer.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			boutonAimer.setPreferredSize(new Dimension(94,44));
+		boutonCommenter = new JButton(new ImageIcon(getClass().getClassLoader().getResource("images/boutons_commenter_petit.png")));
+			boutonCommenter.setBackground(new Color(0, 0, 0));
+			boutonCommenter.setOpaque(false);
+			boutonCommenter.setBorderPainted(false);
+			boutonCommenter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			boutonCommenter.setPreferredSize(new Dimension(94,44));
+
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridheight = gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		gbc.insets = new Insets(0, -20, 0, 0);
+		panel.add(photoProfil, gbc);
+
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		panel.add(labelPrenom, gbc);
+
+		gbc.gridx = 3;
+		gbc.gridy = 0;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+		gbc.insets = new Insets(0, -30, 0, 0);
+		panel.add(labelNom, gbc);
+
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		panel.add(labelDate, gbc);
+
+		gbc.gridx = 3;
+		gbc.gridy = 1;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+		gbc.insets = new Insets(0, 20, 0, 0);
+		panel.add(labelHeure, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridheight = 2;
+		gbc.gridwidth = 6;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		gbc.insets = new Insets(0, -20, 0, 0);
+		panel.add(panneauPublier, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridheight = 1;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		gbc.insets = new Insets(0, -20, 0, 0);
+		panel.add(boutonSignaler, gbc);
+		
+		gbc.gridx = 5;
+		gbc.gridy = 1;
+		gbc.gridheight = gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+		gbc.insets = new Insets(0, 0, 0, 0);
+		panel.add(nbrCom, gbc);
+
+		
+		
+		nbrCom.setActionCommand(Controleur_Mur.ACTION_LISTE_COMMENTAIRES);
+		nbrCom.addActionListener(controleurMur);
+		boutonSupprimer.setActionCommand(Controleur_Mur.ACTION_SUPPRIMER);
+		boutonSupprimer.addActionListener(controleurMur);
+		
+		
+		
+
+			
 	}
 	
 	

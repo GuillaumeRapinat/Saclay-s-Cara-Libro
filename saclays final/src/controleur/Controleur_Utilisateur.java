@@ -7,6 +7,7 @@ import java.util.Vector;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -48,7 +49,9 @@ public class Controleur_Utilisateur implements ActionListener {
 	public static final String ACTION_LISTER_MESSAGES = "LISTE DE MESSAGES";
 	
 	//Admin
+	public static final String ACTION_ADMIN = "ADMIN";
 	public static final String ACTION_VOIR_PUBLICATION = "VOIR UNE PUBLICATION";
+	public static final String ACTION_BLOQUER_UTILISATEUR = "BLOQUER UTILISATEUR";
 
 	private Modele_Utilisateur modeleUtilisateur;
 	private JFrame vue;
@@ -114,6 +117,9 @@ public class Controleur_Utilisateur implements ActionListener {
 			break;
 		case ACTION_DESACTIVER_COMPTE:
 			desactiverCompte();
+			break;
+		case ACTION_ADMIN:
+			coadmin();			//provisoir
 			break;
 		case ACTION_VOIR_PUBLICATION:
 			voirPublication((IdButton) e.getSource());
@@ -438,14 +444,24 @@ public class Controleur_Utilisateur implements ActionListener {
 		}
 		
 	}
+	private void coadmin(){
+		
+		vue.setVisible(false);
+		vue.dispose();
+		vue = new Vue_Admin(this, Modele_Admin.listerSignalements(), Modele_Admin.listerUtilisateurs());
+		
+	}
 	
 	private void voirPublication(IdButton bouton) {
-		//// ton code pour afficher des publications (en ajoutant image, nom et prenom)
+		int id_publi = bouton.getId();
+		Vue_Admin.vuePublication(Modele_Admin.chargerPublication(id_publi));
+		
 		//JFrame fPubli = new JFrame();
 		//Modele_Mur publi = new Modele_Mur();
 		//publi = chercherPubli(bouton.getId());
 		//Vue_Publication.publier(publi);
 	}
+	
 	
 	
 }

@@ -9,6 +9,10 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import Client.Client;
 
 public class Modele_Message {
@@ -35,7 +39,7 @@ public class Modele_Message {
 		try {
 			st = Client.connection.createStatement();
 			rs = st.executeQuery(
-					"SELECT id_message, id_utilisateur_e AS id_utilisateur, date_heure, objet, lu, nom, prenom FROM messages INNER JOIN utilisateurs ON  utilisateurs.id_utilisateur = messages.id_ utilisateur  WHERE id_utilisateur_r = " + id_utilisateur + " AND visibilite_r = TRUE");
+					"SELECT id_message, id_utilisateur_e, date_heure, objet, lu, nom, prenom FROM messages INNER JOIN utilisateurs ON  utilisateurs.id_utilisateur = messages.id_utilisateur_e  WHERE id_utilisateur_r = " + id_utilisateur + " AND visibilite_r = TRUE");
 			
 			while(rs.next()) {
 				Modele_Message message = new Modele_Message();
@@ -64,25 +68,26 @@ public class Modele_Message {
 	}
 	
 	
-	public static Modele_Message recupMessage(int id){
-		Modele_Message contenuMessage = new Modele_Message();
-
+	public static Vector<Modele_Message> recupMessage(int id){
+		Vector<Modele_Message> contenuMessage = new Vector<Modele_Message>();
+		Modele_Message resultat = new Modele_Message();
 		
 		Statement st = null;
 		ResultSet rs = null;
 		try {
 			st = Client.connection.createStatement();
 			rs = st.executeQuery(
-					"SELECT id_message, id_utilisateur_e, date_heure, objet, message, nom, prenom FROM messages INNER JOIN utilisateurs ON messages.id_utilisateur = utilisateurs.id_utilisateur WHERE id_message =" +id);			
-				
-			contenuMessage.id_message = rs.getInt("id_message");
-			contenuMessage.id_utilisateur_e = rs.getInt("id_utilisateur_e");
-			contenuMessage.nom = rs.getString("nom");
-			contenuMessage.prenom = rs.getString("prenom");
-				//m.date_heure = rs.getTimestamp("date_heure");
-			contenuMessage.objet = rs.getString("objet");
-			contenuMessage.texte = rs.getString("message");
-		
+					"SELECT id_message, id_utilisateur_e, date_heure, objet, message, nom, prenom FROM messages INNER JOIN utilisateurs ON messages.id_utilisateur_e = utilisateurs.id_utilisateur WHERE id_message = " +id);			
+			while(rs.next()) {	
+				resultat.id_message = rs.getInt("id_message");
+				resultat.id_utilisateur_e = rs.getInt("id_utilisateur_e");
+				resultat.nom = rs.getString("nom");
+				resultat.prenom = rs.getString("prenom");
+					//m.date_heure = rs.getTimestamp("date_heure");
+				resultat.objet = rs.getString("objet");
+				resultat.texte = rs.getString("message");
+				contenuMessage.add(resultat);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return contenuMessage;
@@ -99,7 +104,7 @@ public class Modele_Message {
 		PreparedStatement pst = null;
 		try {
 			pst = Client.connection.prepareStatement(
-					"UPDATE messages SET lu=true WHERE id-message= " + contenuMessage.id_message );
+					"UPDATE messages SET lu=true WHERE id_message= " + resultat.id_message );
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

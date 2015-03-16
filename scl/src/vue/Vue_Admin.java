@@ -14,16 +14,20 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumn;
 
 import modele.Modele_Utilisateur;
+import modele.MyCellRenderer;
 
 import controleur.Controleur_Utilisateur;
 
@@ -85,17 +89,22 @@ public class Vue_Admin extends JFrame{
 /*		Vector<Modele_Utilisateur> data = new Vector<Modele_Utilisateur>;
  * 			data.listerUtilisateurs()		*/			
 		Object[][] data = {
-			      {02, "Durand", "Marie", 19, false},
-			      {28, "Alesi", "Julie", 18, false},
-			      {54, "Michelet", "Jean", 24, true},
-			      {12, "Dupond", "Pierre", 18, true},
-			      {07, "Timberot", "Martin", 21, true},
-			      {9, "Gravatas", "Paul", 22, true}
+			      {02, "Durand", "Marie", 19, false, false},
+			      {28, "Alesi", "Julie", 18, false, false},
+			      {54, "Michelet", "Jean", 24, true, true},
+			      {12, "Dupond", "Pierre", 18, true, false},
+			      {07, "Timberot", "Martin", 21, true, false},
+			      {9, "Gravatas", "Paul", 22, true, false}
 		};
 	    //Les titres des colonnes
-	    String  title[] = {"iD", "Prénom", "Nom", "Age", "Sexe"};
-			   
+	    String  title[] = {"iD", "Prénom", "Nom", "Age", "Sexe", "Bloqué"};
+			  
 		JTable table = new JTable(data, title);
+		JCheckBox chec = new JCheckBox();
+		DefaultCellEditor monedit = new DefaultCellEditor(chec);
+		TableColumn col = table.getColumnModel().getColumn(5);
+		col.setCellEditor(monedit);
+		col.setCellRenderer(new MyCellRenderer());
 		table.setAutoCreateRowSorter(true);
 		//table.
 		JScrollPane scrollpan = new JScrollPane(table);

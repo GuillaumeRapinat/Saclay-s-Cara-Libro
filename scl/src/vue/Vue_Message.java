@@ -29,7 +29,7 @@ import modele.Modele_Utilisateur;
 
 
 import controleur.Controleur_Message;
-import controleur.Modele_Message;
+
 
 
 public class Vue_Message extends JFrame {
@@ -58,20 +58,20 @@ public class Vue_Message extends JFrame {
 	static Font f6 = new Font ("Helvetica",Font.ITALIC, 12);
 	static Font f7 = new Font ("Helvetica",Font.BOLD, 12);
 	
-	public Vue_Message (Controleur_Message controleurMessage, Vector<Modele_Message> resultatMessages){
+	public Vue_Message (Controleur_Message controleurMessage){//, Vector<Modele_Message> resultatMessages){
 		this.controleurMessage = controleurMessage;
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-
+/*
 		for(Modele_Message message : resultatMessage) {
 		
 		panel.add(titreMessageRecu(message));
 		panel.add(titreMessageRecu(message));
 		panel.add(titreMessageRecu(message));
 				
-		}
+		}*/
 		JScrollPane jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(jsp);	//le panel est déjà dans un scrollbar, il ne reste que mettre le scrollbar dans la fenêtre!!
 		
@@ -89,7 +89,7 @@ public class Vue_Message extends JFrame {
 		}
 		
 		
-	public JButton titreMessageRecu(Modele_Message message){
+/*	public JButton titreMessageRecu(Modele_Message message){
 		
 			IdButton bouton = new IdButton(message.getIdM());
 			
@@ -299,7 +299,7 @@ public class Vue_Message extends JFrame {
 		frame.setLocation(250, 180);
 		frame.setVisible(true);
 	}
-
+*/
 
 	public static void repondre(String prenom, String nom) {
 		

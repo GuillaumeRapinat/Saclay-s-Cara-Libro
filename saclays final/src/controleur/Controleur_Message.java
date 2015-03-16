@@ -69,7 +69,8 @@ public class Controleur_Message implements ActionListener {
 
 	private void lireMessage(IdButton bouton) {
 		int id_message = bouton.getId();
-		Modele_Message contenuMessage = Modele_Message.recupMessage(id_message);
+		Vector<Modele_Message> contenuMessage = Modele_Message.recupMessage(id_message);
+		vueM = new Vue_Message(this, contenuMessage);
 		((Vue_Message) vueM).message(contenuMessage); //automatiquement, le message est "lu"
 		vueM.setAlwaysOnTop(true);
 		

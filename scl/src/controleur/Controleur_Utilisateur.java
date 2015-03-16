@@ -23,9 +23,9 @@ import vue.ImageFileView;
 import vue.ImageFilter;
 import vue.ImagePreview;
 
-import modele.Modele_Message;
+
 import modele.Modele_Utilisateur;
-import modele.Utilisateur;
+
 import vue.Vue_Accueil;
 import vue.Vue_Admin;
 import vue.Vue_Ami;
@@ -120,7 +120,7 @@ public class Controleur_Utilisateur implements ActionListener {
 			listeAmis();
 			break;
 		case ACTION_LISTER_MESSAGES:
-			listeMessages();
+	//		listeMessages();
 			break;
 		case ACTION_AJOUTER_IMAGE:
 			ajouterImage();
@@ -206,11 +206,11 @@ public class Controleur_Utilisateur implements ActionListener {
 		vue2.setVisible(true);
 	}
 	
-	private void listeMessages() {
+/*	private void listeMessages() {
 		Vector<Modele_Message> resultatMessages = chercherMessages(Modele_Utilisateur.getMonId());
 		new Vue_Message(new Controleur_Message(), resultatMessages);
 		
-	}
+	}*/
 	
 	private void ajouterImage() {
 		//Set up the file chooser.

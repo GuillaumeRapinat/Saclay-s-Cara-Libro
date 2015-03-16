@@ -91,6 +91,11 @@ public class Vue_Accueil extends JFrame {
 		boutonReactiver.setActionCommand(Controleur_Utilisateur.ACTION_REACTIVER_COMPTE);
 		boutonReactiver.addActionListener(controleurUtilisateur);
 		
+		//juste pour visualiser admin
+				JButton boutonAdmin = new JButton (">Admin<");
+				boutonAdmin.setActionCommand(Controleur_Utilisateur.ACTION_ADMIN);
+				boutonAdmin.addActionListener(controleurUtilisateur);
+		//////////
 		// ajout des composants avec leurs coordonnees
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -152,6 +157,14 @@ public class Vue_Accueil extends JFrame {
         gbc.insets = new Insets(0, 0, 0, 0);
         this.add(boutonReactiver, gbc);
 		
+      //juste pour visualiser admin
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        gbc.gridheight = gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.BASELINE_TRAILING;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        this.add(boutonAdmin, gbc);
+        
 		// affichage de la fenetre
         URL url = getClass().getResource("/images/logo_SCL_court.png");
         Image icone = Toolkit.getDefaultToolkit().getImage(url);
