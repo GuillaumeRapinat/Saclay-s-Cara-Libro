@@ -24,6 +24,8 @@ import vue.Vue_Liste_Amis;
 import vue.Vue_Message;
 import vue.Vue_Recherche;
 import vue.Vue_Utilisateur;
+//import modele.Modele_Commentaire;
+//import vue.Vue_Commentaire;
 
 public class Controleur_Utilisateur implements ActionListener {
 	
@@ -52,9 +54,14 @@ public class Controleur_Utilisateur implements ActionListener {
 	public static final String ACTION_ADMIN = "ADMIN";
 	public static final String ACTION_VOIR_PUBLICATION = "VOIR UNE PUBLICATION";
 	public static final String ACTION_BLOQUER_UTILISATEUR = "BLOQUER UTILISATEUR";
+	public static final String ACTION_LISTE_COMMENTAIRES_ADMIN = "LISTE COMMENTAIRES D'UNE VUE ADMIN";
+	public static final String ACTION_SUPPRIMER_PUBLI = "SUPPRIMER PUBLICATION";
 
 	private Modele_Utilisateur modeleUtilisateur;
 	private JFrame vue;
+//	private Vue_Commentaire vueCommentaire;
+	//private Modele_Commentaire commentaires;
+	private int id_publi;
 	
 	public Controleur_Utilisateur() {
 		modeleUtilisateur = new Modele_Utilisateur();
@@ -124,9 +131,40 @@ public class Controleur_Utilisateur implements ActionListener {
 		case ACTION_VOIR_PUBLICATION:
 			voirPublication((IdButton) e.getSource());
 			break;
+		case ACTION_LISTE_COMMENTAIRES_ADMIN:
+			listeCommentaireAdmin((IdButton) e.getSource());
+			break;
+		case ACTION_SUPPRIMER_PUBLI:
+			supprimerPublication((FriendButton) e.getSource());
+			break;
 		}
 	}
 
+
+	private void supprimerPublication(FriendButton button) {
+		int id_publi = button.getId();
+		switch(Modele_Admin.supprimerPubli(id_publi)) {
+		case "SUCCES":
+			button.getParent().setVisible(false);
+			break;
+		case "ERREUR SUPPRIMER":
+			JOptionPane.showMessageDialog(new JDialog(),"Impossible de supprimer la publication.", "Erreur", JOptionPane.ERROR_MESSAGE);
+    		break;
+		case "ERREUR SERVEUR":
+			JOptionPane.showMessageDialog(new JDialog(),"Perte de connection au serveur Cara Libro.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			deconnexion();
+			break;
+		}
+	}
+
+	private void listeCommentaireAdmin(IdButton button) {
+		int id_publi = button.getId();
+	/*	vueCommentaire = new Vue_Commentaire(this);
+		commentaires = Modele_Commentaire.chargerCommentaires(id_publi);
+		vueCommentaire.redessiner(commentaires);
+		*/
+		
+	}
 
 	private void deconnexion() {
 		vue.setVisible(false);
